@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Gas
+        psr4_prefix: Gas
+        src_path: app
