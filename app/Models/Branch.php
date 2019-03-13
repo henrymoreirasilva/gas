@@ -3,9 +3,23 @@
 namespace Gas\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-class Branch extends Model
+/**
+ * Class Branch.
+ *
+ * @package namespace Gas\Models;
+ */
+class Branch extends Model implements Transformable
 {
+    use TransformableTrait;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $table = 'branches';
     
     protected $fillable = [
@@ -32,4 +46,5 @@ class Branch extends Model
     public function sales() {
         return $this->hasMany(\Gas\Models\Sale::class);
     }
+
 }

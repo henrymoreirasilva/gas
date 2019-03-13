@@ -3,9 +3,23 @@
 namespace Gas\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Prettus\Repository\Contracts\Transformable;
+use Prettus\Repository\Traits\TransformableTrait;
 
-class Product extends Model
+/**
+ * Class Product.
+ *
+ * @package namespace Gas\Models;
+ */
+class Product extends Model implements Transformable
 {
+    use TransformableTrait;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $table = 'products';
     
     protected $fillable = [
@@ -16,4 +30,5 @@ class Product extends Model
         'cost_price',
         'situation'
     ];
+
 }

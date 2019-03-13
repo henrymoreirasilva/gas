@@ -138,6 +138,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         
         Bestmomo\Scafold\ScafoldServiceProvider::class,
+        Prettus\Repository\Providers\RepositoryServiceProvider::class,
         
         /*
          * Application Service Providers...
@@ -146,6 +147,7 @@ return [
         Gas\Providers\AuthServiceProvider::class,
         Gas\Providers\EventServiceProvider::class,
         Gas\Providers\RouteServiceProvider::class,
+        Gas\Providers\RepositoryServiceProvider::class,
 
     ],
 
