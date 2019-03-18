@@ -25,6 +25,7 @@ class Seller extends Model implements Transformable
     protected $fillable = [
         'name',
         'document',
+        'branch_id',
         'phone',
         'email',
         'address',

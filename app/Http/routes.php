@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('admin/branches', 'BranchesController@index');
+Route::get('admin/clients', 'ClientsController@index');
+Route::get('admin/products', 'ProductsController@index');
+Route::get('admin/sales', 'SalesController@index');
+Route::get('admin/sellers', 'SellersController@index');
