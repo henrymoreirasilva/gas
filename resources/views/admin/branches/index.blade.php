@@ -2,7 +2,7 @@
 @section('content')
 <div class="container">
 	<h3>FILIAIS</h3>
-	<a href="#" class="btn btn-default">Nova filial</a>
+	<a href="{{ route('admin.branches.create') }}" class="btn btn-default">Nova filial</a>
 	<table class="table">
 		<thead>
 			<tr>
