@@ -2,7 +2,7 @@
 
 namespace Gas\Http\Controllers\Auth;
 
-use Gas\User;
+use Gas\Models\User;
 use Validator;
 use Gas\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;

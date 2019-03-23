@@ -4,7 +4,7 @@ namespace Gas\Http\Requests;
 
 use Gas\Http\Requests\Request;
 
-class AdminBrancheRequest extends Request
+class AdminUserRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,13 +24,10 @@ class AdminBrancheRequest extends Request
     public function rules()
     {
         return [
-            'company_name' => 'required|min:3',
-            'phone' => 'required|min:8',
+            'name' => 'required|min:3',
             'email' => 'required|email',
-            'address' => 'required|min:10',
-            'address_number' => 'required|min:1',
-            'city' => 'required|min:3',
-            'state' => 'required|min:2|max:2',
+            'role' => 'required',
+            'situation' => 'required',
         ];
     }
 }

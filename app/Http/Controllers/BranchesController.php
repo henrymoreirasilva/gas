@@ -33,4 +33,18 @@ class BranchesController extends Controller
         
         return redirect()->route('admin.branches.index');
     }
+    
+    public function edit($id) {
+        $branch = $this->repository->find($id);
+        
+        return view('admin.branches.edit', compact('branch'));
+    }
+    
+    public function update(AdminBrancheRequest $request, $id) {
+        $data = $request->all();
+        
+        $this->repository->update($data, $id);
+        
+        return redirect()->route('admin.branches.index');
+    }
 }

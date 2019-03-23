@@ -15,6 +15,10 @@ use Gas\Validators\BranchValidator;
  */
 class BranchRepositoryEloquent extends BaseRepository implements BranchRepository
 {
+    public function lists($column, $key = null) {
+        return $this->model->lists('company_name', 'id');
+    }
+    
     /**
      * Specify Model class name
      *
@@ -34,5 +38,7 @@ class BranchRepositoryEloquent extends BaseRepository implements BranchRepositor
     {
         $this->pushCriteria(app(RequestCriteria::class));
     }
+    
+
     
 }

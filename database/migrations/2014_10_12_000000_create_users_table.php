@@ -17,6 +17,9 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password', 60);
+            //$table->integer('branch_id')->unsigned();
+            $table->string('role', 20);
+            $table->string('situation', 20);   // ativo/inativo
             $table->rememberToken();
             $table->timestamps();
         });

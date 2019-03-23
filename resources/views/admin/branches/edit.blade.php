@@ -1,12 +1,12 @@
 @extends('app')
 @section('content')
 <div class="container">
-	<h3>NOVA FILIAL</h3>
-	
+	<h4>Editando filial: {{ $branch->company_name }}</h4>
+
 	<div class="col-sm-6">
 	@include('errors._check')
 	
-	{!! Form::open(['route' => 'admin.branches.store', 'class' => 'form']) !!}
+	{!! Form::model($branch, ['route' => ['admin.branches.update', $branch->id], 'class' => 'form-horizontal']) !!}
 	
 	@include('admin.branches._form')
 	
