@@ -1,8 +1,8 @@
 @extends('app')
 @section('content')
 <div class="container">
-	<h3>CLIENTES</h3>
-	<a href="#" class="btn btn-default">Novo cliente</a>
+	<h4>Clientes</h4>
+	<a href="{{ route('admin.clients.create') }}" class="btn btn-default">Novo cliente</a>
 	<table class="table">
 		<thead>
 			<tr>
@@ -21,12 +21,14 @@
 			<tr>
 				<td>{{ $client->id }}</td>
 				<td>{{ $client->company_name }}</td>
-				<td>{{ $client->branch->name }}</td>
+				<td>{{ $client->branch->company_name }}</td>
 				<td>{{ $client->document }}</td>
 				<td>{{ $client->phone }}</td>
 				<td>{{ $client->email }}</td>
 				<td>{{ $client->city }}-{{ $client->state }}</td>
-				<td>&nbsp;</td>
+				<td>
+				<a href="{{ route('admin.clients.edit', ['id' => $client->id]) }}" class="btn btn-default btn-sm">Editar</a>
+				</td>
 			</tr>
 		@endforeach
 		</tbody>

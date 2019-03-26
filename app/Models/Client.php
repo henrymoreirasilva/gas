@@ -34,6 +34,7 @@ class Client extends Model implements Transformable
         'city',
         'state',
         'zip_code',
+        'branch_id',
         'active'
     ];
     

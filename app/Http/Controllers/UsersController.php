@@ -43,13 +43,17 @@ class UsersController extends Controller
     public function edit($id) {
         $user = $this->repository->find($id);
         $branches = $this->branchRepository->lists('company_name', 'id');
-        $branches->prepend('***', 0);
+        $branches->prepend('***', '');
         return view('admin.users.edit', compact('user', 'branches'));
     }
     
     public function update(AdminUserRequest $request, $id) {
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
+        if (!$data['branch_id']) {
+            $data['branch_id'] = NULL;
+        }
+        //dd($data);
         $this->repository->update($data, $id);
         
         return redirect()->route('admin.users.index');

@@ -20,6 +20,7 @@
 		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
+
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -38,6 +39,8 @@
 				@if (Auth::user())
 				<ul class="nav navbar-nav">
 					<li><a href="{{ route('admin.branches.index') }}">Filiais</a></li>
+					<li><a href="{{ route('admin.clients.index') }}">Clientes</a></li>
+					<li><a href="{{ route('admin.sellers.index') }}">Vendedores</a></li>
 					@if (Auth::user()->role == 'admin')
 					<li><a href="{{ route('admin.users.index') }}">Usuários</a></li>
 					@endif
@@ -64,9 +67,38 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	<script
-		src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script
-		src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+	<script type="text/javascript">
+    $(document).ready(function(){
+    	
+        $('.small-number').mask('0.000');
+        $('.number').mask('000.000.000', {reverse: true});
+        //$('.cpf-cnpj').mask('000.000.000-00', {reverse: true});
+        //$('.cnpj').mask('00.000.000/0000-00', {reverse: true});
+        $('.money').mask("#.##0,00", {reverse: true});
+        $('.zip-code').mask('00000-000');
+    
+        var maskPhone = function (val) {
+        	return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+        options = {onKeyPress: function(val, e, field, options) {
+        		field.mask(maskPhone.apply({}, arguments), options);
+        	}
+        };
+        $('.phone').mask(maskPhone, options);
+
+        var maskCpfCnpj = function (val) {
+        	return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0009-99';
+        },
+        options = {onKeyPress: function(val, e, field, options) {
+        		field.mask(maskCpfCnpj.apply({}, arguments), options);
+        	}, reverse: true
+        };
+        $('.cpf-cnpj').mask(maskCpfCnpj, options);
+    });
+    </script>
 </body>
 </html>

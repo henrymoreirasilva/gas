@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
 <div class="container">
-	<h3>Usuários</h3>
+	<h4>Usuários</h4>
 	<!--a href="#" class="btn btn-default">Novo usuário</a-->
 	<table class="table">
 		<thead>

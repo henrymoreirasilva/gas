@@ -13,7 +13,7 @@ class AlterClientsAddBranchId extends Migration
     public function up()
     {
         Schema::table('clients', function (Blueprint $table) {
-            $table->integer('branch_id')->unsigned();
+            $table->integer('branch_id')->unsigned()->nullable();
             $table->foreign('branch_id')->references('id')->on('branches');
         });
     }
