@@ -41,6 +41,7 @@
 					<li><a href="{{ route('admin.branches.index') }}">Filiais</a></li>
 					<li><a href="{{ route('admin.clients.index') }}">Clientes</a></li>
 					<li><a href="{{ route('admin.sellers.index') }}">Vendedores</a></li>
+					<li><a href="{{ route('admin.products.index') }}">Produtos</a></li>
 					@if (Auth::user()->role == 'admin')
 					<li><a href="{{ route('admin.users.index') }}">Usuários</a></li>
 					@endif
@@ -74,7 +75,7 @@
 	<script type="text/javascript">
     $(document).ready(function(){
     	
-        $('.small-number').mask('0.000');
+        $('.small-number').mask('0000');
         $('.number').mask('000.000.000', {reverse: true});
         //$('.cpf-cnpj').mask('000.000.000-00', {reverse: true});
         //$('.cnpj').mask('00.000.000/0000-00', {reverse: true});
@@ -91,13 +92,13 @@
         $('.phone').mask(maskPhone, options);
 
         var maskCpfCnpj = function (val) {
-        	return val.replace(/\D/g, '').length === 11 ? '000.000.000-00' : '00.000.000/0009-99';
+        	return val.replace(/\D/g, '').length <= 11 ? '000.000.000-00' : '00.000.000/0009-99';
         },
-        options = {onKeyPress: function(val, e, field, options) {
-        		field.mask(maskCpfCnpj.apply({}, arguments), options);
-        	}, reverse: true
+        optionsCpf = {onKeyPress: function(val, e, field, options) {
+        		field.mask(maskCpfCnpj.apply({}, arguments), optionsCpf);
+        	}
         };
-        $('.cpf-cnpj').mask(maskCpfCnpj, options);
+        $('.cpf-cnpj').mask(maskCpfCnpj, optionsCpf);
     });
     </script>
 </body>

@@ -1,8 +1,8 @@
 @extends('app')
 @section('content')
 <div class="container">
-	<h3>PRODUTOS</h3>
-	<a href="#" class="btn btn-default">Novo produto</a>
+	<h4>Produtos</h4>
+	<a href="{{ route('admin.products.create') }}" class="btn btn-default">Novo produto</a>
 	<table class="table">
 		<thead>
 			<tr>
@@ -18,10 +18,12 @@
 			<tr>
 				<td>{{ $product->id }}</td>
 				<td>{{ $product->name }} - {{ $product->unidade }}</td>
-				<td>{{ $product->sale_price }}</td>
-				<td>{{ $product->situation }}</td>
+				<td class="money">{{ $product->sale_price }}</td>
+				<td>{{ $product->active?'Ativo':'Inativo' }}</td>
 				
-				<td>&nbsp;</td>
+				<td>
+				<a href="{{ route('admin.products.edit', ['id' => $product->id]) }}" class="btn btn-default btn-sm">Editar</a>
+				</td>
 			</tr>
 		@endforeach
 		</tbody>

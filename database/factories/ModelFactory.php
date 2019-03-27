@@ -28,7 +28,7 @@ $factory->define(Gas\Models\Product::class, function (Faker\Generator $faker) {
         'unidade' => $faker->randomLetter . $faker->randomLetter,
         'sale_price' => $faker->randomFloat(2, 500, 1000),
         'cost_price' => $faker->randomFloat(2, 10, 400),
-        'situation' => $faker->boolean
+        'active' => true
     ];
 });
 

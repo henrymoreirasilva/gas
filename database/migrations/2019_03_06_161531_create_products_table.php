@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('unidade', 3);
             $table->float('sale_price');
             $table->float('cost_price');
-            $table->boolean('situation');
+            $table->boolean('active');
             $table->timestamps();
         });
     }

@@ -28,7 +28,7 @@ class Product extends Model implements Transformable
         'unidade',
         'sale_price',
         'cost_price',
-        'situation'
+        'active'
     ];
 
 }

@@ -46,14 +46,21 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::post('store', ['as' => 'store', 'uses' => 'ClientsController@store']);
     });
     
-        Route::group(['prefix' => 'sellers', 'as' => 'sellers.'], function() {
-            Route::get('/', ['as' => 'index', 'uses' => 'SellersController@index']);
-            Route::get('create', ['as' => 'create', 'uses' => 'SellersController@create']);
-            Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SellersController@edit']);
-            Route::post('update/{id}', ['as' => 'update', 'uses' => 'SellersController@update']);
-            Route::post('store', ['as' => 'store', 'uses' => 'SellersController@store']);
+    Route::group(['prefix' => 'sellers', 'as' => 'sellers.'], function() {
+        Route::get('/', ['as' => 'index', 'uses' => 'SellersController@index']);
+        Route::get('create', ['as' => 'create', 'uses' => 'SellersController@create']);
+        Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SellersController@edit']);
+        Route::post('update/{id}', ['as' => 'update', 'uses' => 'SellersController@update']);
+        Route::post('store', ['as' => 'store', 'uses' => 'SellersController@store']);
+    });
+    
+        Route::group(['prefix' => 'products', 'as' => 'products.'], function() {
+            Route::get('/', ['as' => 'index', 'uses' => 'ProductsController@index']);
+            Route::get('create', ['as' => 'create', 'uses' => 'ProductsController@create']);
+            Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'ProductsController@edit']);
+            Route::post('update/{id}', ['as' => 'update', 'uses' => 'ProductsController@update']);
+            Route::post('store', ['as' => 'store', 'uses' => 'ProductsController@store']);
         });
 });
 
-Route::get('admin/products', 'ProductsController@index');
 Route::get('admin/sales', 'SalesController@index');
