@@ -35,5 +35,7 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
         $this->pushCriteria(app(RequestCriteria::class));
     }
    
-    
+    public function lists($column, $key = null) {
+        return $this->model->lists($column, $key);
+    }
 }

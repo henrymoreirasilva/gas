@@ -42,6 +42,7 @@
 					<li><a href="{{ route('admin.clients.index') }}">Clientes</a></li>
 					<li><a href="{{ route('admin.sellers.index') }}">Vendedores</a></li>
 					<li><a href="{{ route('admin.products.index') }}">Produtos</a></li>
+					<li><a href="{{ route('admin.sales.index') }}">Vendas</a></li>
 					@if (Auth::user()->role == 'admin')
 					<li><a href="{{ route('admin.users.index') }}">Usuários</a></li>
 					@endif
@@ -81,6 +82,7 @@
         //$('.cnpj').mask('00.000.000/0000-00', {reverse: true});
         $('.money').mask("#.##0,00", {reverse: true});
         $('.zip-code').mask('00000-000');
+        $('.date').mask('99/99/9999');
     
         var maskPhone = function (val) {
         	return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';

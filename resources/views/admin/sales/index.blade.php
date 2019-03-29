@@ -1,8 +1,8 @@
 @extends('app')
 @section('content')
 <div class="container">
-	<h3>VENDAS</h3>
-	<a href="#" class="btn btn-default">Nova venda</a>
+	<h4>Vendas</h4>
+	<a href="{{ route('admin.sales.create') }}" class="btn btn-default">Nova venda</a>
 	<table class="table">
 		<thead>
 			<tr>
@@ -21,8 +21,10 @@
 				<td>{{ $sale->client->name }}</td>
 				<td>{{ $sale->seller->name }}</td>
 				<td>{{ $sale->sale_date }}</td>
-				<td>{{ $sale->amount }}</td>
-				<td>&nbsp;</td>
+				<td class="money">{{ $sale->amount }}</td>
+				<td>
+				<a href="{{ route('admin.sales.edit', ['id' => $sale->id]) }}" class="btn btn-default btn-sm">Editar</a>
+				</td>
 			</tr>
 		@endforeach
 		</tbody>

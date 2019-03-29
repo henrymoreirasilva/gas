@@ -35,4 +35,8 @@ class SellerRepositoryEloquent extends BaseRepository implements SellerRepositor
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
+    public function lists($column, $key = null) {
+        return $this->model->lists($column, $key);
+    }
+    
 }
