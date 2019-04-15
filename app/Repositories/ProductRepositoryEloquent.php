@@ -35,4 +35,14 @@ class ProductRepositoryEloquent extends BaseRepository implements ProductReposit
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
+    public function getProductsNameWith($expression, $columns) {
+        $products = $this->findWhere([['name', 'like', "%$expression%"]], $columns);
+        
+        return $products;
+    }
+    
+    public function lists($column, $key = null) {
+        return $this->model->lists($column, $key);
+    }
+
 }

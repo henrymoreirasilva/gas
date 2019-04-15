@@ -10,7 +10,7 @@
 				<th>CLIENTE</th>
 				<th>VENDEDOR</th>
 				<th>DATA</th>
-				<th>VAOR</th>
+				<th>VALOR</th>
 				<th>AÇÃO</th>
 			</tr>
 		</thead>

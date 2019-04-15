@@ -32,5 +32,7 @@ class SaleItem extends Model implements Transformable
     public function sale() {
         return $this->belongsTo(\Gas\Models\Sale::class);
     }
-
+    public function product() {
+        return $this->belongsTo(\Gas\Models\Product::class);
+    }
 }

@@ -60,6 +60,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'ProductsController@edit']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'ProductsController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'ProductsController@store']);
+        
+        
+        Route::get('getproducts/{expression}', ['as' => 'getproducts', 'uses' => 'ProductsController@getProducts']);
     });
     
     Route::group(['prefix' => 'sales', 'as' => 'sales.'], function() {

@@ -54,6 +54,15 @@ class ProductsController extends Controller
         return redirect()->route('admin.products.index');
     }
     
+    public function getProducts($expression) {
+        $products =  $this->repository->getProductsNameWith($expression, ['name','id']);
+        $autocomplete = array();
+        foreach ($products as $p) {
+            $autocomplete[] = ['id' => "{$p['id']}", 'label' => "{$p['name']}", 'value' => "{$p['name']}"];
+        }
+        return ($autocomplete);
+    }
+    
     public function tiraMaskPreco($p) {
         $p = str_replace('.', '', $p);
         $p = str_replace(',', '.', $p);

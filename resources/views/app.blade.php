@@ -69,8 +69,9 @@
 	@yield('content')
 
 	<!-- Scripts -->
-	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
 	<script type="text/javascript">
@@ -101,7 +102,13 @@
         	}
         };
         $('.cpf-cnpj').mask(maskCpfCnpj, optionsCpf);
+
+        $( "#sale_date" ).datepicker({ dateFormat: 'dd/mm/yy' });
+
     });
     </script>
+    <style>
+    .money, number {text-align:right}
+    </style>
 </body>
 </html>
