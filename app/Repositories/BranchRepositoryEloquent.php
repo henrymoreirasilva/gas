@@ -16,7 +16,7 @@ use Gas\Validators\BranchValidator;
 class BranchRepositoryEloquent extends BaseRepository implements BranchRepository
 {
     public function lists($column, $key = null) {
-        return $this->model->lists($column, $key);
+        return $this->model->orderBy('company_name')->lists($column, $key);
     }
     
     /**

@@ -55,4 +55,14 @@ class ClientsController extends Controller
         
         return redirect()->route('admin.clients.index');
     }
+    
+    public function listsNameWith($expression) {
+        $clients =  $this->repository->listsNameWith($expression, ['name','id']);
+        $autocomplete = array();
+        foreach ($clients as $p) {
+            $autocomplete[] = ['id' => "{$p['id']}", 'label' => "{$p['name']}", 'value' => "{$p['name']}"];
+        }
+        dd($autocomplete);
+        return ($autocomplete);
+    }
 }

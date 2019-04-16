@@ -6,7 +6,7 @@
 	<div class="col-sm-6">
 	@include('errors._check')
 	
-	{!! Form::model($sale, ['route' => ['admin.sales.update', $sale->id], 'class' => 'form-horizontal']) !!}
+	{!! Form::model($sale, ['route' => ['admin.sales.update', $sale->id], 'class' => 'form-horizontal', 'onsubmit' => 'return valida_sale()']) !!}
 	
 	@include('admin.sales._form')
 	

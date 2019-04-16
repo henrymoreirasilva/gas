@@ -29,7 +29,7 @@ class AdminSaleRequest extends Request
             'branch_id' => 'required',
             'sale_date' => 'required',
 
-            'amount' => 'required',
+            //'amount' => 'required',
             'situation' => 'required',
         ];
     }

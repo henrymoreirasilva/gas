@@ -36,7 +36,7 @@ class SellerRepositoryEloquent extends BaseRepository implements SellerRepositor
     }
     
     public function lists($column, $key = null) {
-        return $this->model->lists($column, $key);
+        return $this->model->orderBy($column)->lists($column, $key);
     }
     
 }

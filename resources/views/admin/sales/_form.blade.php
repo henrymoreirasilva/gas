@@ -51,7 +51,7 @@
     			<option value="" selected="selected">***</option>
     			@foreach ($products as $product)
 
-    			<option value="{{ $product->id }}" data-price="{{ $product->sale_price }}" data-unidade="{{ $product->unidade }}">{{ $product->name }}</option>
+    			<option value="{{ $product->id }}" data-price="{{ number_format($product->sale_price, 2, ',', '.') }}" data-unidade="{{ $product->unidade }}">{{ $product->name }}</option>
     			@endforeach
     		</select>
     	</div>
@@ -59,13 +59,13 @@
 	<div class="form-group">
     	<label for="pesquisa-quantidade" class="col-sm-2" >Quantidade:</label>
     	<div class="col-sm-4">
-    		<input class="form-control number" value="1" id="pesquisa-quantidade" />
+    		<input class="form-control number" value="" id="pesquisa-quantidade" />
     		</div>
 	</div>
 	<div class="form-group">
     	<label for="pesquisa-quantidade" class="col-sm-2">Preço:</label>
     	<div class="col-sm-4">
-    		<input class="form-control " value="" id="pesquisa-preco" />
+    		<input class="form-control money" value="" id="pesquisa-preco" />
     		</div>
 		<button class="btn btn-primary" type="button" id="bt-add-item" onclick="addItem()">Adicionar</button>
 	</div>
@@ -106,13 +106,25 @@
 		var index = <?=$index++?>;
 		function itemSelected() {
 			var price = $('#product_id option:selected').data('price');
-			$('#pesquisa-preco').val(price.toFixed(2));
+			$('#pesquisa-preco').val(price);
 		}
 		function addItem() {
 			//var index = $('#items-list tr').length + 1;
-			var id = $('#product_id').val();
+			var id = Number($('#product_id').val());
 			var qt = Number($('#pesquisa-quantidade').val());
-			var vl = Number($('#pesquisa-preco').val());
+			var vl = $('#pesquisa-preco').val().replace(".", "");
+			vl = vl.replace(",", ".");
+			vl = Number(vl);
+			
+			if (isNaN(id) || isNaN(qt) || isNaN(vl)) {
+				alert('Item inválido.');
+				return;
+			}
+			if (id <= 0 || qt <= 0 || vl <= 0) {
+				alert('Item não pode ser incluído.');
+				return;
+			}
+			
 
 			var html = '<tr id="tr-' + index + '">';
 			html += '<td class="col-sm-4">' + $('#product_id option:selected').text() + '<input type="hidden" name="item[' + index + '][id-item]" value="' + id + '" /></td>';
@@ -125,6 +137,10 @@
 			calcTotal();
 
 			index++;
+
+			$('#pesquisa-quantidade').val('');
+			$('#pesquisa-preco').val('');
+			$('#product_id').val('');
 			
 		}
 		function calcPreco(i) {
@@ -153,11 +169,41 @@
 
 				valorTotalPedido += Number(totalProduto);
 			});
-			$('#td-total').text(valorTotalPedido.toFixed(2));
+			$('#td-total').text(valorTotalPedido.toFixed(2)).mask("#.###,##", {reverse: true});
 		}
 		function removeItem(i) {
 			$('#tr-' + i).remove();
 			calcTotal();
 		}
-		
+		function valida_sale() {
+			if ($('#branch_id').val() == '') {
+				alert('Escolha a filial.');
+				$('#branch_id').focus();
+				return false;
+			}
+			if ($('#client_id').val() == '') {
+				alert('Escolha o cliente.');
+				$('#client_id').focus();
+				return false;
+			}
+			if ($('#seller_id').val() == '') {
+				alert('Escolha o vendedor.');
+				$('#seller_id').focus();
+				return false;
+			}
+			if ($('#sale_date').val() == '') {
+				alert('Informe a data da venda.');
+				$('#sale_date').focus();
+				return false;
+			}
+			if ($('#payment_form').val() == '') {
+				$('#payment_form').val('DINHEIRO');
+			}
+			if ($('.item-total').length == 0) {
+				alert('Escolha os itens da venda.');
+				$('#product_id').focus();
+				return false;
+			}
+			return true;
+		}
 	</script>

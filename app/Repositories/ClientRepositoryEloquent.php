@@ -36,6 +36,12 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
     }
    
     public function lists($column, $key = null) {
-        return $this->model->lists($column, $key);
+        return $this->model->orderBy('name')->lists($column, $key);
+    }
+    
+    public function listsNameWith($expression, $columns) {
+        $clients = $this->findWhere([['name', 'like', "%$expression%"]], $columns);
+        
+        return $clients;
     }
 }

@@ -47,7 +47,7 @@ class SalesController extends Controller
         $clients->prepend('***', '');
         $sellers = $this->sellerRepository->lists('name', 'id');
         $sellers->prepend('***', '');
-        $products = $this->productRepository->all();
+        $products = $this->productRepository->orderBy('name')->all();
         return view('admin.sales.create', compact('branches', 'clients', 'sellers', 'products'));
     }
     
@@ -79,7 +79,7 @@ class SalesController extends Controller
         $clients->prepend('***', '');
         $sellers = $this->sellerRepository->lists('name', 'id');
         $sellers->prepend('***', '');
-        $products = $this->productRepository->all();
+        $products = $this->productRepository->orderBy('name')->all();
         return view('admin.sales.edit', compact('sale', 'branches', 'clients', 'sellers', 'products', 'items'));
     }
     

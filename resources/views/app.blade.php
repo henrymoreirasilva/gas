@@ -32,7 +32,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">GÁS</a>
+				<a class="navbar-brand" href="#">GAVA GÁS</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="navbar">
@@ -96,7 +96,7 @@
         $('.phone').mask(maskPhone, options);
 
         var maskCpfCnpj = function (val) {
-        	return val.replace(/\D/g, '').length <= 11 ? '000.000.000-00' : '00.000.000/0009-99';
+        	return val.replace(/\D/g, '').length === 14 ? '00.000.000/0000-00' : '000.000.000-00999';
         },
         optionsCpf = {onKeyPress: function(val, e, field, options) {
         		field.mask(maskCpfCnpj.apply({}, arguments), optionsCpf);
@@ -104,12 +104,22 @@
         };
         $('.cpf-cnpj').mask(maskCpfCnpj, optionsCpf);
 
+        // picture da data no form de vendas
         $( "#sale_date" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
+        // desabilitar ENTER nos forms
+        $('form').keypress(function(e) {
+            if ((e.keyCode == 10)||(e.keyCode == 13)) {
+                e.preventDefault();
+            }
+        });
+
     });
+
+    
     </script>
     <style>
-    .money, number {text-align:right}
+    .money, .number, .small-number {text-align:right}
     </style>
 </body>
 </html>

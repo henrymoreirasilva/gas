@@ -42,7 +42,7 @@ class ProductRepositoryEloquent extends BaseRepository implements ProductReposit
     }
     
     public function lists($column, $key = null) {
-        return $this->model->lists($column, $key);
+        return $this->model->orderBy('name')->lists($column, $key);
     }
 
 }

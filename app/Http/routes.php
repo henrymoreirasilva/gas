@@ -44,6 +44,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'ClientsController@edit']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'ClientsController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'ClientsController@store']);
+        
+        Route::get('get-clients/{expression}', ['as' => 'get-clients', 'uses' => 'ClientsController@listsNameWith']);
     });
     
     Route::group(['prefix' => 'sellers', 'as' => 'sellers.'], function() {
