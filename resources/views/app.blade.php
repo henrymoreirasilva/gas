@@ -84,6 +84,7 @@
         $('.money').mask("#.##0,00", {reverse: true});
         $('.zip-code').mask('00000-000');
         $('.date').mask('99/99/9999');
+        $('.cnpj').mask('00.000.000/0000-00');
     
         var maskPhone = function (val) {
         	return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';

@@ -53,6 +53,7 @@ $factory->define(Gas\Models\Client::class, function (Faker\Generator $faker) {
 $factory->define(Gas\Models\Branch::class, function (Faker\Generator $faker) {
     return [
         'company_name' => $faker->company,
+        'document' => random_int(10000, 999999),
         'phone' => $faker->phoneNumber,
         'email' => $faker->companyEmail,
         'address' => $faker->streetName,

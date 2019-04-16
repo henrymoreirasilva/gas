@@ -25,12 +25,12 @@ class AdminClientRequest extends Request
     {
         return [
             'name' => 'required|min:3',
-            'phone' => 'required|min:8',
+            /*'phone' => 'required|min:8',
             'email' => 'required|email',
             'address' => 'required|min:10',
             'address_number' => 'required|min:1',
             'city' => 'required|min:3',
-            'state' => 'required|min:2|max:2',
+            'state' => 'required|min:2|max:2',*/
         ];
     }
 }

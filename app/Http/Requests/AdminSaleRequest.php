@@ -24,7 +24,13 @@ class AdminSaleRequest extends Request
     public function rules()
     {
         return [
-            //
+            'client_id' => 'required',
+            'seller_id' => 'required',
+            'branch_id' => 'required',
+            'sale_date' => 'required',
+
+            'amount' => 'required',
+            'situation' => 'required',
         ];
     }
 }

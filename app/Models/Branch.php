@@ -24,6 +24,7 @@ class Branch extends Model implements Transformable
     
     protected $fillable = [
         'company_name',
+        'document',
         'phone',
         'email',
         'address',

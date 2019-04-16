@@ -25,6 +25,7 @@ class AdminBrancheRequest extends Request
     {
         return [
             'company_name' => 'required|min:3',
+            'document' => 'required',
             'phone' => 'required|min:8',
             'email' => 'required|email',
             'address' => 'required|min:10',

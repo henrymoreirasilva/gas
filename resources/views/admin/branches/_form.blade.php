@@ -1,3 +1,9 @@
+	<div class="form-group">
+		{!! Form::label('document', 'CNPJ:', ['class' => 'col-sm-2']) !!}
+		<div class="col-sm-10">
+		{!! Form::text('document', null, ['class' => 'form-control cnpj']) !!}
+		</div>
+	</div>
 	<div class="form-group ">
 		{!! Form::label('company_name', 'Nome:', ['class' => 'col-sm-2']) !!}
 		<div class="col-sm-10">

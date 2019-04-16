@@ -42,7 +42,7 @@ class BranchesController extends Controller
     
     public function update(AdminBrancheRequest $request, $id) {
         $data = $request->all();
-        
+
         $this->repository->update($data, $id);
         
         return redirect()->route('admin.branches.index');
