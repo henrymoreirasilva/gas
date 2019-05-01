@@ -65,22 +65,16 @@ class SalesController extends Controller
         foreach($data['item'] as $item) {
             SaleItem::create(['product_id' => $item['id-item'], 'sale_id' => $sale->id, 'price' => $this->tiraMaskPreco($item['price-item']), 'quantity' => $item['qtd-item']]);
         }
-        return redirect()->route('admin.sales.index');
+        //return redirect()->route('admin.sales.index');
+        return $this->create();
     }
     
     public function edit($id) {
         $sale = $this->repository->find($id);
         $sale->sale_date = $this->formataData($sale->sale_date);
         $items = $sale->items;
-        
-        $branches = $this->branchRepository->lists('company_name', 'id');
-        $branches->prepend('***', '');
-        $clients = $this->clientRepository->lists('name', 'id');
-        $clients->prepend('***', '');
-        $sellers = $this->sellerRepository->lists('name', 'id');
-        $sellers->prepend('***', '');
-        $products = $this->productRepository->orderBy('name')->all();
-        return view('admin.sales.edit', compact('sale', 'branches', 'clients', 'sellers', 'products', 'items'));
+
+        return view('admin.sales.edit', compact('sale', 'items'));
     }
     
     public function update(AdminSaleRequest $request, $id) {

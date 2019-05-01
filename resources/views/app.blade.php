@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laravel</title>
+<title>GAVA GÁS</title>
 
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"
@@ -74,6 +74,7 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 	<script type="text/javascript">
     $(document).ready(function(){
     	
@@ -108,11 +109,39 @@
         $( "#sale_date" ).datepicker({ dateFormat: 'dd/mm/yy' });
 
         // desabilitar ENTER nos forms
-        $('form').keypress(function(e) {
+        $('form input').keypress(function(e) {
+ 
             if ((e.keyCode == 10)||(e.keyCode == 13)) {
                 e.preventDefault();
             }
         });
+
+		// Autocomplete de clientes
+        /*$( "#client_id2" ).autocomplete({
+            source: function( request, response ) {
+                $.ajax( {
+                  url: "/admin/clients/get-clients/" + $('#client_id2').val(),
+                  dataType: "jsonp",
+                  success: function( data ) {
+                    response( data );
+                  }
+                } );
+              },
+            minLength: 3,
+            select: function( event, ui ) {
+              console.log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+            }
+          });*/
+
+       /*$('#client_id2').typeahead({
+    	    source:  function (query, process) {
+            return $.get("/admin/clients/get-clients/" + $('#client_id2').val(), function (data) {
+            		console.log(data);
+            		data = $.parseJSON(data);
+    	            return process(data);
+    	        });
+    	    }
+    	});*/
 
     });
 

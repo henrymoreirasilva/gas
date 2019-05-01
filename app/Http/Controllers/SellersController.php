@@ -26,6 +26,19 @@ class SellersController extends Controller
         return view('admin.sellers.index', compact('sellers'));
     }
     
+    public function show($id, $branchId = NULL) {
+        if ($branchId) {
+            $branch = $this->repository->findWhere([
+                //Default Condition =
+                'branch_id' => $branchId,
+                'id' => $id
+            ]);
+        } else {
+            $branch = $this->repository->find($id);
+        }
+        return $branch;
+    }
+    
     public function create() {
         $branches = $this->branchRepository->lists('company_name', 'id');
         return view('admin.sellers.create', compact('branches'));

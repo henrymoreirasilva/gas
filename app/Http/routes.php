@@ -34,6 +34,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('/', ['as' => 'index', 'uses' => 'BranchesController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'BranchesController@create']);
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'BranchesController@edit']);
+        Route::get('show/{id}', ['as' => 'show', 'uses' => 'BranchesController@show']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'BranchesController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'BranchesController@store']);
     });
@@ -42,6 +43,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('/', ['as' => 'index', 'uses' => 'ClientsController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'ClientsController@create']);
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'ClientsController@edit']);
+        Route::get('show/{id}', ['as' => 'show', 'uses' => 'ClientsController@show']);
+        Route::get('show/{id}/{branchId}', ['as' => 'show', 'uses' => 'ClientsController@show']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'ClientsController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'ClientsController@store']);
         
@@ -52,6 +55,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('/', ['as' => 'index', 'uses' => 'SellersController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'SellersController@create']);
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SellersController@edit']);
+        Route::get('show/{id}/{branchId}', ['as' => 'show', 'uses' => 'SellersController@show']);
+        Route::get('show/{id}', ['as' => 'show', 'uses' => 'SellersController@show']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'SellersController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'SellersController@store']);
     });
@@ -62,7 +67,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'ProductsController@edit']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'ProductsController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'ProductsController@store']);
-        
+        Route::get('get/{id}', ['as' => 'get', 'uses' => 'ProductsController@get']);
         
         Route::get('getproducts/{expression}', ['as' => 'getproducts', 'uses' => 'ProductsController@getProducts']);
     });

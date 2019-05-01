@@ -8,6 +8,7 @@ use Gas\Http\Requests;
 use Gas\Http\Controllers\Controller;
 use Gas\Repositories\BranchRepository;
 use Gas\Http\Requests\AdminBrancheRequest;
+use Gas\Models\Branch;
 
 class BranchesController extends Controller
 {
@@ -20,6 +21,12 @@ class BranchesController extends Controller
         $branches = $this->repository->paginate(10);
         
         return view('admin.branches.index', compact('branches'));
+    }
+    
+    public function show($id) {
+        $branch = $this->repository->find($id);
+        
+        return $branch;
     }
     
     public function create() {       

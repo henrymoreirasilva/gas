@@ -26,6 +26,19 @@ class ClientsController extends Controller
         return view('admin.clients.index', compact('clients'));
     }
     
+    public function show($id, $branchId = NULL) {
+        if ($branchId) {
+            $client = $this->repository->findWhere([
+                //Default Condition =
+                'branch_id' => $branchId,
+                'id' => $id
+            ]);
+        } else {
+            $client = $this->repository->find($id);
+        }
+        return $client;
+    }
+    
     public function create() {
         $branches = $this->branchRepository->lists('company_name', 'id');
         return view('admin.clients.create', compact('branches'));
@@ -57,12 +70,14 @@ class ClientsController extends Controller
     }
     
     public function listsNameWith($expression) {
+        
         $clients =  $this->repository->listsNameWith($expression, ['name','id']);
+
         $autocomplete = array();
         foreach ($clients as $p) {
             $autocomplete[] = ['id' => "{$p['id']}", 'label' => "{$p['name']}", 'value' => "{$p['name']}"];
         }
-        dd($autocomplete);
+        //dd($autocomplete);
         return ($autocomplete);
     }
 }
