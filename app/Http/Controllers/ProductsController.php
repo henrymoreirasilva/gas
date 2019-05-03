@@ -69,6 +69,30 @@ class ProductsController extends Controller
         return ($autocomplete);
     }
     
+    public function lista($exp = '') {
+        if (empty($exp)) {
+            $products = $this->repository->paginate(10);
+        } else {
+            $products = \Gas\Models\Product::where('name', 'LIKE', '%'.$exp.'%')
+            ->orWhere('description', 'LIKE', '%'.$exp.'%')
+            ->paginate(10);
+            $products->appends(array('exp' => $exp));
+        }
+        
+        return view('admin.products.pesquisa', ['exp' => $exp, 'products' => $products]);
+    }
+    
+    public function pesquisa(Request $request) {
+        $data = $request->all();
+        
+        $products = \Gas\Models\Product::where('name', 'LIKE', '%'.$data['exp'].'%')
+        ->orWhere('description', 'LIKE', '%'.$data['exp'].'%')
+        ->paginate(10);
+        $products->appends(array('exp' => $data['exp']));
+        
+        return view('admin.products.pesquisa', ['products' => $products, 'exp' => $data['exp']]);
+    }
+    
     public function tiraMaskPreco($p) {
         $p = str_replace('.', '', $p);
         $p = str_replace(',', '.', $p);

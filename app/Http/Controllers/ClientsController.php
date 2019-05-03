@@ -26,16 +26,8 @@ class ClientsController extends Controller
         return view('admin.clients.index', compact('clients'));
     }
     
-    public function show($id, $branchId = NULL) {
-        if ($branchId) {
-            $client = $this->repository->findWhere([
-                //Default Condition =
-                'branch_id' => $branchId,
-                'id' => $id
-            ]);
-        } else {
-            $client = $this->repository->find($id);
-        }
+    public function show($id) {
+        $client = $this->repository->find($id);
         return $client;
     }
     
@@ -69,15 +61,31 @@ class ClientsController extends Controller
         return redirect()->route('admin.clients.index');
     }
     
-    public function listsNameWith($expression) {
-        
-        $clients =  $this->repository->listsNameWith($expression, ['name','id']);
-
-        $autocomplete = array();
-        foreach ($clients as $p) {
-            $autocomplete[] = ['id' => "{$p['id']}", 'label' => "{$p['name']}", 'value' => "{$p['name']}"];
+    public function lista($exp = '') {
+        if (empty($exp)) {
+            $clients = $this->repository->paginate(10);
+        } else {
+            $clients = \Gas\Models\Client::where('name', 'LIKE', '%'.$exp.'%')
+            ->orWhere('company_name', 'LIKE', '%'.$exp.'%')
+            ->orWhere('email', 'LIKE', '%'.$exp.'%')
+            ->orWhere('phone', 'LIKE', '%'.$exp.'%')
+            ->orWhere('document', 'LIKE', '%'.$exp.'%')->paginate(10);
+            $clients->appends(array('exp' => $data['exp']));
         }
-        //dd($autocomplete);
-        return ($autocomplete);
+        
+        return view('admin.clients.pesquisa', ['exp' => $exp, 'clients' => $clients]);
+    }
+    
+    public function pesquisa(Request $request) {
+        $data = $request->all();
+        
+        $clients = \Gas\Models\Client::where('name', 'LIKE', '%'.$data['exp'].'%')
+        ->orWhere('company_name', 'LIKE', '%'.$data['exp'].'%')
+        ->orWhere('email', 'LIKE', '%'.$data['exp'].'%')
+        ->orWhere('phone', 'LIKE', '%'.$data['exp'].'%')
+        ->orWhere('document', 'LIKE', '%'.$data['exp'].'%')->paginate(10);
+        $clients->appends(array('exp' => $data['exp']));
+        
+        return view('admin.clients.pesquisa', ['clients' => $clients, 'exp' => $data['exp']]);
     }
 }

@@ -69,4 +69,40 @@ class SellersController extends Controller
         
         return redirect()->route('admin.sellers.index');
     }
+    
+    public function lista($branch_id, $exp = '') {
+        if (empty($exp)) {
+            $sellers = \Gas\Models\Seller::where('branch_id', '=', $branch_id)->paginate(10);
+        } else {
+            $sellers = \Gas\Models\Seller::where('branch_id', '=', $branch_id)
+            ->where(
+                function ($query) use ($exp) {
+                    $query->where('name', 'LIKE', '%'.$exp.'%')
+                    ->orWhere('email', 'LIKE', '%'.$exp.'%')
+                    ->orWhere('phone', 'LIKE', '%'.$exp.'%');
+                }
+            )->paginate(10);
+            $sellers->appends(array('exp' => $data['exp']));
+        }
+        
+        return view('admin.sellers.pesquisa', ['branch_id' => $branch_id, 'exp' => $exp, 'sellers' => $sellers]);
+    }
+    
+    public function pesquisa(Request $request, $branch_id) {
+        $data = $request->all();
+        
+        $sellers = \Gas\Models\Seller::where('branch_id', '=', $branch_id)
+        ->where(
+            function ($query) use ($data) {
+                $query->where('name', 'LIKE', '%'.$data['exp'].'%')
+                ->orWhere('email', 'LIKE', '%'.$data['exp'].'%')
+                ->orWhere('phone', 'LIKE', '%'.$data['exp'].'%');
+            }
+        )->paginate(10);
+        
+        $sellers->appends(array('exp' => $data['exp']));
+        
+        return view('admin.sellers.pesquisa', ['branch_id' => $branch_id, 'sellers' => $sellers, 'exp' => $data['exp']]);
+    }
+
 }

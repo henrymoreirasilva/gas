@@ -19,7 +19,7 @@
 				<td>{{ $product->id }}</td>
 				<td>{{ $product->name }} - {{ $product->unidade }}</td>
 				<td class="money">{{ $product->sale_price }}</td>
-				<td>{{ $product->active?'Ativo':'Inativo' }}</td>
+                                <td>{{ $product->active?'Ativo':'Inativo' }}</td>
 				
 				<td>
 				<a href="{{ route('admin.products.edit', ['id' => $product->id]) }}" class="btn btn-default btn-sm">Editar</a>
