@@ -32,7 +32,7 @@
                             class="icon-bar"></span> <span class="icon-bar"></span> <span
                             class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">GAVA GÁS</a>
+                    <a class="navbar-brand" href="/home">GAVA GÁS</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar">
@@ -142,6 +142,7 @@ $(document).ready(function () {
             var modal_branch_id = Number($('#branch_id').val());
             if (isNaN(modal_branch_id) || modal_branch_id == 0) {
                 alert('Filial não foi definida.');
+                $('#modal-content').attr('src', '');
             } else {
                 modal.find('.modal-title').text('Pesquisa de vendedores');
                 $('#modal-content').attr('src', '/admin/sellers/lista/' + modal_branch_id.toString());

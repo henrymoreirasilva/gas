@@ -2,9 +2,9 @@
 @section('content')
 <div class="container">
     <h4>Vendas</h4>
-    <a href="{{ route('admin.sales.create') }}" class="btn btn-default">Nova venda</a><br /><br />
-    
-    <form class="" id="expressao-form" action="{{ route('admin.sales.index') }}" method="get">
+    <a href="{{ route('admin.sales.create') }}" class="btn btn-default">Nova venda</a> 
+    <br /><br />
+    <form class="clearfix" id="expressao-form" action="{{ route('admin.sales.index') }}" method="get">
         <div class="form-group col-sm-2">
             <label for="date1">Data inicial</label>
             <input type="text" class="form-control date" id="date1" name="date1" value="{{ $data['date1'] }}" >
@@ -14,7 +14,7 @@
             <input type="text" class="form-control date" id="date2" name="date2" value="{{ $data['date2'] }}" >
         </div>
         <div class="form-group col-sm-2">
-            <label for="seller_id">Filial:</label>
+            <label for="branch_id">Filial:</label>
 
             {!! Form::select('branch_id', $branches, $data['branch_id'], ['class' => 'form-control']) !!}
 
@@ -42,10 +42,12 @@
             </select>
         </div>
         <div class="form-group col-sm-2">
-                <br/>
-            <button type="submit" class="btn btn-default">Filtrar</button>
+            <button type="submit" class="btn btn-default">Aplicar</button>
         </div>
     </form>
+    <!--div class="text-info text-right">
+        Valor total das vendas para o filtro aplicado: R$ 999.999,99
+    </div-->
     <table class="table">
         <thead>
             <tr>

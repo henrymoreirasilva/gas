@@ -132,19 +132,19 @@ class SalesController extends Controller {
         if (empty($data['exp']) and empty($data['branch_id']) and empty($data['seller_id'])) {
             $sales = DB::table('sales')
                     ->select(
-                        
+
                             'sales.*', 'branches.company_name as branch_name', 
                             'sellers.name as seller_name', 'clients.name as client_name', 
                             'clients.company_name as client_company_name'
                             )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
-                    ->join('sellers', function ($join) use ($data) {
+                    ->join('sellers', function ($join) {
                         $join->on('sales.seller_id', '=', 'sellers.id');
                     })
-                    ->join('clients', function ($join) use ($data) {
+                    ->join('clients', function ($join) {
                         $join->on('sales.client_id', '=', 'clients.id');
                     })
-                    ->join('branches', function ($join) use ($data) {
+                    ->join('branches', function ($join) {
                         $join->on('sales.branch_id', '=', 'branches.id');
                     })
                     ->orderBy($sort, 'asc')
@@ -152,19 +152,18 @@ class SalesController extends Controller {
         } else {
             $sales = DB::table('sales')
                     ->select(
-                        
                             'sales.*', 'branches.company_name as branch_name', 
                             'sellers.name as seller_name', 'clients.name as client_name', 
                             'clients.company_name as client_company_name'
                             )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
-                    ->join('sellers', function ($join) use ($data) {
+                    ->join('sellers', function ($join) {
                         $join->on('sales.seller_id', '=', 'sellers.id');
                     })
-                    ->join('clients', function ($join) use ($data) {
+                    ->join('clients', function ($join) {
                         $join->on('sales.client_id', '=', 'clients.id');
                     })
-                    ->join('branches', function ($join) use ($data) {
+                    ->join('branches', function ($join){
                         $join->on('sales.branch_id', '=', 'branches.id');
                     })
                     ->where(function ($query) use ($data) {
@@ -192,7 +191,7 @@ class SalesController extends Controller {
                     ->orderBy($sort, 'asc')
                     ->paginate(10);
         }
-        
+        //dd($sales);
         $data['date1'] = $this->formataData($data['date1']);
         $data['date2'] = $this->formataData($data['date2']);
 

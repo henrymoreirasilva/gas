@@ -9,6 +9,7 @@ use Gas\Http\Controllers\Controller;
 use Gas\Repositories\ClientRepository;
 use Gas\Http\Requests\AdminClientRequest;
 use Gas\Repositories\BranchRepository;
+use DB;
 
 class ClientsController extends Controller
 {
@@ -20,11 +21,11 @@ class ClientsController extends Controller
         $this->branchRepository = $branchRepository;
     }
     
-    public function index() {
+    /*public function index() {
         $clients = $this->repository->paginate(10);
         
         return view('admin.clients.index', compact('clients'));
-    }
+    }*/
     
     public function show($id) {
         $client = $this->repository->find($id);
@@ -87,5 +88,70 @@ class ClientsController extends Controller
         $clients->appends(array('exp' => $data['exp']));
         
         return view('admin.clients.pesquisa', ['clients' => $clients, 'exp' => $data['exp']]);
+    }
+    
+    
+    public function index(Request $request) {
+        $data = $request->all();
+        //dd($data);
+        if (!isset($data['branch_id'])) {
+            $data['branch_id'] = NULL;
+        }
+        if (!isset($data['exp'])) {
+            $data['exp'] = '';
+        }
+        if (!isset($data['ordenacao'])) {
+            $data['ordenacao'] = 'Venda';
+        }
+        
+        $sort = 'clients.id';
+        switch ($data['ordenacao']) {
+            case 'Cliente': $sort = 'clients.name';break;
+            case 'Cliente2': $sort = 'clients.company_name';break;
+            case 'Filial': $sort = 'branches.company_name';break;
+            case 'city': $sort = 'clients.city';break;
+        }
+        
+        if (empty($data['exp']) and empty($data['branch_id'])) {
+            $clients = DB::table('clients')
+                    ->select(
+                            'clients.*', 'branches.company_name as branch_name'
+                            )
+                    ->join('branches', function ($join) use ($data) {
+                        $join->on('clients.branch_id', '=', 'branches.id');
+                    })
+                    ->orderBy($sort, 'asc')
+                    ->paginate(10);
+        } else {
+            $clients = DB::table('clients')
+                    ->select(
+                            'clients.*', 'branches.company_name as branch_name'
+                            )
+                    ->join('branches', function ($join) use ($data) {
+                        $join->on('clients.branch_id', '=', 'branches.id');
+                    })
+                    ->where(function ($query) use ($data) {
+                        if (!empty($data['exp'])) {
+                            $query->where('clients.name', 'LIKE', '%' . $data['exp'] . '%')
+                            ->orWhere('clients.company_name', 'LIKE', '%' . $data['exp'] . '%')
+                            ->orWhere('clients.email', 'LIKE', '%' . $data['exp'] . '%')
+                            ->orWhere('clients.phone', 'LIKE', '%' . $data['exp'] . '%')
+                            ->orWhere('branches.company_name', 'LIKE', '%' . $data['exp'] . '%')
+                            ->orWhere('clients.id', '=', $data['exp']);
+                        }
+                        
+                        if (!empty($data['branch_id'])) {
+                            $query->where('branches.id', '=', $data['branch_id']);
+                        }
+                    })
+                    ->orderBy($sort, 'asc')
+                    ->paginate(10);
+        }
+
+        $clients->appends($data);
+        
+        $branches = $this->branchRepository->lists('company_name', 'id');
+        $branches->prepend('***', 0);
+        return view('admin.clients.index', compact('data', 'clients', 'branches'));
     }
 }
