@@ -112,6 +112,7 @@ class ClientsController extends Controller
             case 'city': $sort = 'clients.city';break;
         }
         
+        
         if (empty($data['exp']) and empty($data['branch_id'])) {
             $clients = DB::table('clients')
                     ->select(
@@ -136,6 +137,7 @@ class ClientsController extends Controller
                             ->orWhere('clients.company_name', 'LIKE', '%' . $data['exp'] . '%')
                             ->orWhere('clients.email', 'LIKE', '%' . $data['exp'] . '%')
                             ->orWhere('clients.phone', 'LIKE', '%' . $data['exp'] . '%')
+                            ->orWhere('clients.city', 'LIKE', '%' . $data['exp'] . '%')
                             ->orWhere('branches.company_name', 'LIKE', '%' . $data['exp'] . '%')
                             ->orWhere('clients.id', '=', $data['exp']);
                         }

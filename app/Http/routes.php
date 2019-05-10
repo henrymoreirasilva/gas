@@ -80,5 +80,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('edit/{id}', ['as' => 'edit', 'uses' => 'SalesController@edit']);
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'SalesController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'SalesController@store']);
+        Route::delete('delete/{id}', ['as' => 'delete', 'uses' => 'SalesController@destroy']);
     });
 });

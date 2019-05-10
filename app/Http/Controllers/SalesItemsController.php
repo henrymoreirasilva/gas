@@ -82,7 +82,10 @@ class SalesItemsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sale = \Gas\Models\SaleItem::find($id);
+        if ($sale->item->delete()) {
+            $sale->delete();
+        }
     }
 
 }

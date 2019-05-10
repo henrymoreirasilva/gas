@@ -241,4 +241,10 @@ class SalesController extends Controller {
         return $dias;
     }
 
+    public function destroy($id) {
+        $sale = \Gas\Models\Sale::find($id);
+        $sale->items()->delete();
+        $sale->delete();
+        return redirect()->route('admin.sales.index');
+    }
 }

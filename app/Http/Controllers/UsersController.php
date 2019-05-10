@@ -49,7 +49,12 @@ class UsersController extends Controller
     
     public function update(AdminUserRequest $request, $id) {
         $data = $request->all();
-        $data['password'] = bcrypt($data['password']);
+        if (empty($data['password'])) {
+            unset($data['password']);
+        } else {
+            $data['password'] = bcrypt($data['password']);
+        }
+        
         if (!$data['branch_id']) {
             $data['branch_id'] = NULL;
         }

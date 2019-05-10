@@ -11,6 +11,16 @@
 	@include('admin.sales._form')
 	
 	{!! Form::close() !!}
+
+        {!! Form::open(['url' => 'admin/sales/delete/'.$sale->id, 'method' => 'DELETE', 'onsubmit' => 'return confirma()', 'style'  => 'text-align:right']) !!}
+        {!! Form::button('Excluir', ['type' => 'submit',  'class' => 'btn btn-danger']) !!}
+        {!! Form::close() !!}
+        <br/><br/>
 	</div>
 </div>
+<script>
+function confirma() {
+    return confirm('Confirma a exclusão?'); 
+}
+</script>
 @endsection()
