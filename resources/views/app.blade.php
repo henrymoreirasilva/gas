@@ -43,6 +43,12 @@
                         <li><a href="{{ route('admin.sellers.index') }}">Vendedores</a></li>
                         <li><a href="{{ route('admin.products.index') }}">Produtos</a></li>
                         <li><a href="{{ route('admin.sales.index') }}">Vendas</a></li>
+                        <li class="dropdown"><a href="#" class="dropdown-toggle"
+                               data-toggle="dropdown" role="button" aria-expanded="false">Relatorios</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ url('/admin/sales/relatorios/venda-diaria') }}">Vendas diárias</a></li>
+                            </ul>
+                        </li>
                         @if (Auth::user()->role == 'admin')
                         <li><a href="{{ route('admin.users.index') }}">Usuários</a></li>
                         @endif

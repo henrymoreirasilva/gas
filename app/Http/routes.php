@@ -74,6 +74,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::get('getproducts/{expression}', ['as' => 'getproducts', 'uses' => 'ProductsController@getProducts']);
     });
 
+    
+    
     Route::group(['prefix' => 'sales', 'as' => 'sales.'], function() {
         Route::get('/', ['as' => 'index', 'uses' => 'SalesController@index']);
         Route::get('create', ['as' => 'create', 'uses' => 'SalesController@create']);
@@ -81,5 +83,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::post('update/{id}', ['as' => 'update', 'uses' => 'SalesController@update']);
         Route::post('store', ['as' => 'store', 'uses' => 'SalesController@store']);
         Route::delete('delete/{id}', ['as' => 'delete', 'uses' => 'SalesController@destroy']);
+        Route::get('relat', ['as' => 'por-data', 'uses' => 'SalesController@porData']);
+        Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function() {
+            Route::get('venda-diaria', ['as' => 'venda-diaria', 'uses' => 'SalesController@periodo']);
+        });
     });
 });

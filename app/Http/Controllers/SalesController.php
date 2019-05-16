@@ -247,4 +247,58 @@ class SalesController extends Controller {
         $sale->delete();
         return redirect()->route('admin.sales.index');
     }
+    
+    public function periodo(Request $request) {
+        $sales = array();
+        $data = $request->all();
+        if (count($data) > 0) {
+            if (isset($data['date1'])) { 
+                $data['date1'] = $this->formataData($data['date1'], '-');
+            }
+            if (isset($data['date2'])) { 
+
+                $data['date2'] = $this->formataData($data['date2'], '-');
+            }
+            if (!isset($data['branch_id'])) {
+                $data['branch_id'] = NULL;
+            }
+
+                $sales = DB::table('sales')
+                    ->select(
+                            DB::raw('SUM(sales.amount) as total_sales'),
+                            DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"),
+                            'branches.company_name as branch_name',
+                            'branches.id as branch_id'
+                            )
+                    ->whereBetween('sale_date', [$data['date1'], $data['date2']])
+                    ->join('branches', function ($join){
+                        $join->on('sales.branch_id', '=', 'branches.id');
+                    })
+                    /*->where(function ($query) use ($data) {                      
+
+                        if (!empty($data['branch_id'])) {
+                            $query->where('branches.id', '=', $data['branch_id']);
+                        }
+                    })*/
+                    ->orderBy('sales.sale_date', 'desc')
+                    ->orderBy('branches.company_name')
+                    ->orderBy('branches.id')
+
+                    ->groupBy('sales.sale_date')
+                    ->groupBy('branches.id')
+
+                    ->get();
+
+                //dd($sales);
+                $data['date1'] = $this->formataData($data['date1']);
+                $data['date2'] = $this->formataData($data['date2']);
+
+    } else {
+                $data['date1'] = date('d/m/Y');
+                $data['date2'] = date('d/m/Y');
+    }
+
+
+        return view('admin.sales.relatorios.venda-diaria', compact('data', 'sales'));
+    }
 }
