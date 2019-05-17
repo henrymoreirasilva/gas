@@ -321,7 +321,10 @@ class SalesController extends Controller {
 
             $sales = DB::table('sales')
                     ->select(
-                        DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'products.name as product_name', 'branches.id as branch_id', 'products.id as product_id', 'sale_items.quantity', 'sale_items.price'
+                        DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'products.name as product_name', 'branches.id as branch_id', 'products.id as product_id',
+                        DB::raw("SUM(sale_items.quantity * sale_items.price) AS price"),
+                        DB::raw("SUM(sale_items.quantity) AS quantity"),  
+                        DB::raw("AVG(sale_items.price) AS price_avg")
                     )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
                     ->join('branches', function ($join) {

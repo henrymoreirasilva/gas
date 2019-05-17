@@ -114,10 +114,10 @@
                         </div>
                         <hr />
                         <div class="row">
-                            <div class="col-xs-3 col-xs-offset-2">PRODUTO</div>
+                            <div class="col-xs-3 col-xs-offset-1">PRODUTO</div>
                             <div class="col-xs-2 text-right">QUANTIDADE </div>
-                            <div class="col-xs-2 text-right">PREÇO </div>
-                            <div class="col-xs-3 text-right">TOTAL </div>
+                            <div class="col-xs-2 text-right">PREÇO MÉDIO </div>
+                            <div class="col-xs-2 text-right">TOTAL </div>
                         </div>
                         <hr /><hr>
                         <div class="row"><div class="col-xs-12">DATA: '. $sale->sale_date. '</div></div>
@@ -125,17 +125,16 @@
             $linhas = 9;
         }
 
-        $totalProduto = $sale->price * $sale->quantity;
         $html .= '  <div class="row">
 
-                        <div class="col-xs-3 col-xs-offset-2">'. $sale->product_id. '-'. $sale->product_name. '</div>
+                        <div class="col-xs-3 col-xs-offset-1">'. $sale->product_id. '-'. $sale->product_name. '</div>
                         <div class="col-xs-2 number">'. round($sale->quantity, 0).'</div>
+                        <div class="col-xs-2 money">'. number_format($sale->price_avg, 2, ',', '.').'</div>
                         <div class="col-xs-2 money">'. number_format($sale->price, 2, ',', '.').'</div>
-                        <div class="col-xs-3 money">'. number_format($totalProduto, 2, ',', '.').'</div>
                     </div>';
-        $totalPeriodo += (float)$totalProduto;
-        $totalDia +=  (float)$totalProduto;
-        $totalFilial +=  (float)$totalProduto;
+        $totalPeriodo += (float)$sale->price;
+        $totalDia +=  (float)$sale->price;
+        $totalFilial +=  (float)$sale->price;
         //echo $totalDia. ' - ';
         $linhas++;
     }
