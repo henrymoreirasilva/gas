@@ -109,7 +109,7 @@
             $html .= '  <hr class="new-page" /><hr>
                         <div class="row">
                             <div class="col-xs-3">GAVA GÁS</div>
-                            <div class="col-xs-6 text-center">VENDAS POR PERÍODO: '. $data['date1'] . ' até '. $data['date2'] . '</div>
+                            <div class="col-xs-6 text-center">VENDAS DATA-FILIAL-CLIENTE :: De: '. $data['date1'] . ' até '. $data['date2'] . '</div>
                             <div class="col-xs-3 text-right">Página: '. $pagina. '/$$</div>
                         </div>
                         <hr />

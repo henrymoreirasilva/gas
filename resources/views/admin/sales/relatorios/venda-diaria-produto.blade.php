@@ -143,13 +143,13 @@
         $html .= '  <div class="row">
 
                         <div class="col-xs-4 col-xs-offset-2">TOTAL EM: '. $diaAtual. '</div>
-                        <div class="col-xs-4 money">'. number_format($totalDia, 2, ',', '.').'</div>
+                        <div class="col-xs-6 money">'. number_format($totalDia, 2, ',', '.').'</div>
                     </div>
                     <hr />';
         $html .= '  <div class="row">
 
                 <div class="col-xs-4 col-xs-offset-2"><h5>TOTAL GERAL: </h5></div>
-                <div class="col-xs-4 money"><h5>'. number_format($totalPeriodo, 2, ',', '.').'</h5></div>
+                <div class="col-xs-6 money"><h5>'. number_format($totalPeriodo, 2, ',', '.').'</h5></div>
             </div>
             <hr />';
 
