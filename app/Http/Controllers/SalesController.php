@@ -264,7 +264,7 @@ class SalesController extends Controller {
 
             $sales = DB::table('sales')
                     ->select(
-                            DB::raw('SUM(sales.amount) as total_sales'), DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'clients.name as client_name', 'branches.id as branch_id', 'clients.id as client_id', 'sales.amount'
+                        DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'clients.name as client_name', 'branches.id as branch_id', 'clients.id as client_id', 'sales.amount'
                     )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
                     ->join('branches', function ($join) {
@@ -286,8 +286,8 @@ class SalesController extends Controller {
                     ->orderBy('branches.company_name')
                     ->orderBy('branches.id')
                     ->orderBy('clients.name')
-                    ->groupBy('sales.sale_date')
-                    ->groupBy('branches.id')
+//                    ->groupBy('sales.sale_date')
+//                    ->groupBy('branches.id')
                     ->get();
 
             //dd($sales);

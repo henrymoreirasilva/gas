@@ -135,7 +135,7 @@
                     </div>';
         $totalPeriodo += (float)$totalProduto;
         $totalDia +=  (float)$totalProduto;
-        $totalFilial =  (float)$totalProduto;
+        $totalFilial +=  (float)$totalProduto;
         //echo $totalDia. ' - ';
         $linhas++;
     }

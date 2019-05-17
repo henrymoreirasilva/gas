@@ -127,11 +127,11 @@
         $html .= '  <div class="row">
 
                         <div class="col-xs-4 col-xs-offset-2">'. $sale->client_id. '-'. $sale->client_name. '</div>
-                        <div class="col-xs-4 money">'. number_format($sale->total_sales, 2, ',', '.').'</div>
+                        <div class="col-xs-4 money">'. number_format($sale->amount, 2, ',', '.').'</div>
                     </div>';
-        $totalPeriodo += (float)$sale->total_sales;
-        $totalDia =  (float)$sale->total_sales + $totalDia;
-        $totalFilial =  (float)$sale->total_sales + $totalFilial;
+        $totalPeriodo += (float)$sale->amount;
+        $totalDia +=  (float)$sale->amount;
+        $totalFilial +=  (float)$sale->amount;
         //echo $totalDia. ' - ';
         $linhas++;
     }
