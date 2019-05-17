@@ -34,12 +34,12 @@ class SalesController extends Controller {
         $this->itemController = $itemController;
     }
 
-   /* public function index() {
-        $sales = $this->repository->paginate(10);
-        $date1 = date('Y-m-d');
-        $date2 = date('Y-m-d');
-        return view('admin.sales.index', compact('sales', ['date1' => $date1, 'date2' => $date2]));
-    }*/
+    /* public function index() {
+      $sales = $this->repository->paginate(10);
+      $date1 = date('Y-m-d');
+      $date2 = date('Y-m-d');
+      return view('admin.sales.index', compact('sales', ['date1' => $date1, 'date2' => $date2]));
+      } */
 
     public function create() {
         $sale = new Sale();
@@ -91,19 +91,18 @@ class SalesController extends Controller {
         $this->repository->update($data, $id);
 
         return redirect()->route('admin.sales.index');
-
     }
 
     public function index(Request $request) {
         $data = $request->all();
         //dd($data);
-        if (!isset($data['date1'])) { 
-            $data['date1'] = date('Y-m-'). '01';
+        if (!isset($data['date1'])) {
+            $data['date1'] = date('Y-m-') . '01';
         } else {
             $data['date1'] = $this->formataData($data['date1'], '-');
         }
-        if (!isset($data['date2'])) { 
-            $data['date2'] = date('Y-m-'). $this->diasDesteMes();
+        if (!isset($data['date2'])) {
+            $data['date2'] = date('Y-m-') . $this->diasDesteMes();
         } else {
             $data['date2'] = $this->formataData($data['date2'], '-');
         }
@@ -119,24 +118,26 @@ class SalesController extends Controller {
         if (!isset($data['ordenacao'])) {
             $data['ordenacao'] = 'Venda';
         }
-        
+
         $sort = 'sales.id';
         switch ($data['ordenacao']) {
-            case 'Cliente': $sort = 'clients.name';break;
-            case 'Cliente2': $sort = 'clients.company_name';break;
-            case 'Filial': $sort = 'branches.company_name';break;
-            case 'Vendedor': $sort = 'sellers.name';break;
-            case 'Data': $sort = 'sales.sale_date';break;
+            case 'Cliente': $sort = 'clients.name';
+                break;
+            case 'Cliente2': $sort = 'clients.company_name';
+                break;
+            case 'Filial': $sort = 'branches.company_name';
+                break;
+            case 'Vendedor': $sort = 'sellers.name';
+                break;
+            case 'Data': $sort = 'sales.sale_date';
+                break;
         }
-        
+
         if (empty($data['exp']) and empty($data['branch_id']) and empty($data['seller_id'])) {
             $sales = DB::table('sales')
                     ->select(
-
-                            'sales.*', 'branches.company_name as branch_name', 
-                            'sellers.name as seller_name', 'clients.name as client_name', 
-                            'clients.company_name as client_company_name'
-                            )
+                            'sales.*', 'branches.company_name as branch_name', 'sellers.name as seller_name', 'clients.name as client_name', 'clients.company_name as client_company_name'
+                    )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
                     ->join('sellers', function ($join) {
                         $join->on('sales.seller_id', '=', 'sellers.id');
@@ -152,10 +153,8 @@ class SalesController extends Controller {
         } else {
             $sales = DB::table('sales')
                     ->select(
-                            'sales.*', 'branches.company_name as branch_name', 
-                            'sellers.name as seller_name', 'clients.name as client_name', 
-                            'clients.company_name as client_company_name'
-                            )
+                            'sales.*', 'branches.company_name as branch_name', 'sellers.name as seller_name', 'clients.name as client_name', 'clients.company_name as client_company_name'
+                    )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
                     ->join('sellers', function ($join) {
                         $join->on('sales.seller_id', '=', 'sellers.id');
@@ -163,7 +162,7 @@ class SalesController extends Controller {
                     ->join('clients', function ($join) {
                         $join->on('sales.client_id', '=', 'clients.id');
                     })
-                    ->join('branches', function ($join){
+                    ->join('branches', function ($join) {
                         $join->on('sales.branch_id', '=', 'branches.id');
                     })
                     ->where(function ($query) use ($data) {
@@ -178,11 +177,11 @@ class SalesController extends Controller {
                             ->orWhere('sales.sale_date', 'LIKE', '%' . $data['exp'] . '%')
                             ->orWhere('sales.id', '=', $data['exp']);
                         }
-                        
+
                         if (!empty($data['seller_id'])) {
                             $query->where('sellers.id', '=', $data['seller_id']);
                         }
-                        
+
                         if (!empty($data['branch_id'])) {
                             $query->where('branches.id', '=', $data['branch_id']);
                         }
@@ -196,10 +195,10 @@ class SalesController extends Controller {
         $data['date2'] = $this->formataData($data['date2']);
 
         $sales->appends($data);
-        
+
         $sellers = $this->sellerRepository->lists('name', 'id');
         $sellers->prepend('***', 0);
-        
+
         $branches = $this->branchRepository->lists('company_name', 'id');
         $branches->prepend('***', 0);
         return view('admin.sales.index', compact('data', 'sales', 'sellers', 'branches'));
@@ -218,12 +217,12 @@ class SalesController extends Controller {
             return substr($d, 8, 2) . '/' . substr($d, 5, 2) . '/' . substr($d, 0, 4);
         }
     }
-    
+
     public function diasDesteMes() {
-        
+
         $mes = date('m');
         $year = date('Y');
-        
+
         if ($mes == '01' or $mes == '03' or $mes == '05' or $mes == '07' or $mes == '08' or $mes == '10' or $mes == '12') {
             $dias = '31';
         } else {
@@ -237,7 +236,7 @@ class SalesController extends Controller {
                 }
             }
         }
-       
+
         return $dias;
     }
 
@@ -247,15 +246,15 @@ class SalesController extends Controller {
         $sale->delete();
         return redirect()->route('admin.sales.index');
     }
-    
-    public function periodo(Request $request) {
+
+    public function vendaDiaria(Request $request) {
         $sales = array();
         $data = $request->all();
         if (count($data) > 0) {
-            if (isset($data['date1'])) { 
+            if (isset($data['date1'])) {
                 $data['date1'] = $this->formataData($data['date1'], '-');
             }
-            if (isset($data['date2'])) { 
+            if (isset($data['date2'])) {
 
                 $data['date2'] = $this->formataData($data['date2'], '-');
             }
@@ -263,42 +262,107 @@ class SalesController extends Controller {
                 $data['branch_id'] = NULL;
             }
 
-                $sales = DB::table('sales')
+            $sales = DB::table('sales')
                     ->select(
-                            DB::raw('SUM(sales.amount) as total_sales'),
-                            DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"),
-                            'branches.company_name as branch_name',
-                            'branches.id as branch_id'
-                            )
+                            DB::raw('SUM(sales.amount) as total_sales'), DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'clients.name as client_name', 'branches.id as branch_id', 'clients.id as client_id', 'sales.amount'
+                    )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
-                    ->join('branches', function ($join){
+                    ->join('branches', function ($join) {
                         $join->on('sales.branch_id', '=', 'branches.id');
                     })
-                    /*->where(function ($query) use ($data) {                      
+                    ->join('clients', function ($join) {
+                        $join->on('sales.client_id', '=', 'clients.id');
+                    })
+                    ->where(function ($query) use ($data) {                      
 
-                        if (!empty($data['branch_id'])) {
-                            $query->where('branches.id', '=', $data['branch_id']);
-                        }
-                    })*/
+                      if (empty($data['branch_id'])) {
+                        $query->where('branches.id', '<>', 0);
+                      } else {
+                        $query->where('branches.id', '=', $data['branch_id']);
+                      }
+
+                    })
                     ->orderBy('sales.sale_date', 'desc')
                     ->orderBy('branches.company_name')
                     ->orderBy('branches.id')
-
+                    ->orderBy('clients.name')
                     ->groupBy('sales.sale_date')
                     ->groupBy('branches.id')
-
                     ->get();
 
-                //dd($sales);
-                $data['date1'] = $this->formataData($data['date1']);
-                $data['date2'] = $this->formataData($data['date2']);
+            //dd($sales);
+            $data['date1'] = $this->formataData($data['date1']);
+            $data['date2'] = $this->formataData($data['date2']);
+        } else {
+            $data['date1'] = date('d/m/Y');
+            $data['date2'] = date('d/m/Y');
+        }
 
-    } else {
-                $data['date1'] = date('d/m/Y');
-                $data['date2'] = date('d/m/Y');
+        $branches = $this->branchRepository->lists('company_name', 'id');
+        $branches->prepend('***', 0);
+        
+        return view('admin.sales.relatorios.venda-diaria-cliente', compact('data', 'sales', 'branches'));
     }
+    
+    public function vendaDiariaProduto(Request $request) {
+        $sales = array();
+        $data = $request->all();
+        if (count($data) > 0) {
+            if (isset($data['date1'])) {
+                $data['date1'] = $this->formataData($data['date1'], '-');
+            }
+            if (isset($data['date2'])) {
 
+                $data['date2'] = $this->formataData($data['date2'], '-');
+            }
+            if (!isset($data['branch_id'])) {
+                $data['branch_id'] = NULL;
+            }
 
-        return view('admin.sales.relatorios.venda-diaria', compact('data', 'sales'));
+            $sales = DB::table('sales')
+                    ->select(
+                        DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'products.name as product_name', 'branches.id as branch_id', 'products.id as product_id', 'sale_items.quantity', 'sale_items.price'
+                    )
+                    ->whereBetween('sale_date', [$data['date1'], $data['date2']])
+                    ->join('branches', function ($join) {
+                        $join->on('sales.branch_id', '=', 'branches.id');
+                    })
+                    ->join('sale_items', function ($join) {
+                        $join->on('sale_items.sale_id', '=', 'sales.id');
+                    })
+                    ->join('products', function ($join) {
+                        $join->on('products.id', '=', 'sale_items.product_id');
+                    })
+                    ->where(function ($query) use ($data) {                      
+
+                        if (empty($data['branch_id'])) {
+                          $query->where('branches.id', '<>', 0);
+                        } else {
+                          $query->where('branches.id', '=', $data['branch_id']);
+                        }
+                    })
+                    ->orderBy('sales.sale_date', 'desc')
+                    ->orderBy('branches.company_name')
+                    ->orderBy('branches.id')
+                    ->orderBy('products.name')
+                            
+                    ->groupBy('sales.sale_date')
+                    ->groupBy('branches.id')
+                    ->groupBy('products.id')
+                    ->get();
+
+            //dd($sales);
+            $data['date1'] = $this->formataData($data['date1']);
+            $data['date2'] = $this->formataData($data['date2']);
+        } else {
+            $data['date1'] = date('d/m/Y');
+            $data['date2'] = date('d/m/Y');
+        }
+
+        $branches = $this->branchRepository->lists('company_name', 'id');
+        $branches->prepend('***', 0);
+        
+        return view('admin.sales.relatorios.venda-diaria-produto', compact('data', 'sales', 'branches'));
     }
+    
 }

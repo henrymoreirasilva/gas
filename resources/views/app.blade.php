@@ -44,9 +44,10 @@
                         <li><a href="{{ route('admin.products.index') }}">Produtos</a></li>
                         <li><a href="{{ route('admin.sales.index') }}">Vendas</a></li>
                         <li class="dropdown"><a href="#" class="dropdown-toggle"
-                               data-toggle="dropdown" role="button" aria-expanded="false">Relatorios</a>
+                                                data-toggle="dropdown" role="button" aria-expanded="false">Relatorios</a>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/admin/sales/relatorios/venda-diaria') }}">Vendas diárias</a></li>
+                                <li><a href="{{ url('/admin/sales/relatorios/venda-diaria-cliente') }}">Vendas Data-Filial-Cliente</a></li>
+                                <li><a href="{{ url('/admin/sales/relatorios/venda-diaria-produto') }}">Vendas Data-Filial-Produto</a></li>
                             </ul>
                         </li>
                         @if (Auth::user()->role == 'admin')
@@ -143,7 +144,7 @@ $(document).ready(function () {
             modal.find('.modal-title').text('Pesquisa de produtos');
             $('#modal-content').attr('src', '/admin/products/lista');
         }
-        
+
         if (recipient == 'sellers') {
             var modal_branch_id = Number($('#branch_id').val());
             if (isNaN(modal_branch_id) || modal_branch_id == 0) {
@@ -157,7 +158,7 @@ $(document).ready(function () {
 
 
     });
-    
+
 
 
 });
