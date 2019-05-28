@@ -6,7 +6,7 @@
     <div class="col-sm-6">
         @include('errors._check')
 
-        {!! Form::open(['route' => 'admin.sales.store', 'class' => 'form-horizontal', 'onsubmit' => 'return valida_sale()']) !!}
+        {!! Form::open(['route' => 'admin.sales.store', 'class' => 'form-horizontal', 'onsubmit' => 'return valida_sale()', 'id' => 'form-vendas']) !!}
 
         @include('admin.sales._form')
 

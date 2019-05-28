@@ -5,8 +5,9 @@
             {!! Form::text('client_id', null, ['class' => 'form-control number', 'onchange' => 'getClient(this.value)',  'autofocus', 'tabindex' => 1, 'style' => 'z-index:0']) !!}
 
             <span class="input-group-btn" style="z-index: 0">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" data-whatever="clients">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" data-whatever="clients" id="bt-clients">
                     <span class="ui-icon ui-icon-search"></span>
+                    F7
                 </button>
             </span>
         </div>
@@ -28,8 +29,9 @@
             {!! Form::text('seller_id', null, ['class' => 'form-control number', 'onchange' => 'getSeller(this.value)', 'tabindex' => 2, 'style' => 'z-index:0']) !!}
 
             <span class="input-group-btn" style="z-index: 0">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" data-whatever="sellers">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" data-whatever="sellers" id="bt-sellers">
                     <span class="ui-icon ui-icon-search"></span>
+                    F8
                 </button>
             </span>
         </div>
@@ -56,8 +58,9 @@
 
             <input class="form-control number" value="" id="item_id" onchange="getProduct(this.value)" tabindex="4"  style="z-index: 0"/>
             <span class="input-group-btn" style="z-index: 0">
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" data-whatever="products">
+                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal" data-whatever="products" id="bt-products">
                     <span class="ui-icon ui-icon-search"></span>
+                    F9
                 </button>
             </span>
         </div>
@@ -128,7 +131,7 @@
 </div>
 <div>
 
-    {!! Form::submit('Salvar', ['class' => 'btn btn-primary']) !!}
+    {!! Form::submit('Salvar F10', ['class' => 'btn btn-primary']) !!}
     <a href="{{ route('admin.sales.index') }}" class="btn btn-default">Voltar</a>
 </div>
 <p></p>
@@ -169,6 +172,7 @@
                         $('#item_name').html(data.name);
                         $('#item_qtd').val('');
                         $('#item_price').val(sale_price);
+                        $('#item_qtd').focus();
                     }
                 }
 
@@ -189,6 +193,7 @@
                     } else {
                         var branch_company_name = data.company_name;
                         $('#branch_name').html(branch_company_name);
+                        $('#seller_id').focus();
                     }
                 }
 
@@ -226,13 +231,14 @@
 
     // Recupera informações do vendedor correspondente ao código.
     function getSeller(id) {
+        console.log('getseller');
         if (id) {
             $.ajax({
                 url: "/admin/sellers/show/" + id + '/' + $('#branch_id').val(),
                 success: function (data) {
                     if (data.length == 0) {
                         alert('Vendedor não encontrado na filial ' + $('#branch_name').html());
-                        $('#seller_id').val('').focus()
+                        $('#seller_id').val('').focus();
                     } else {
                         var name = data[0].name;
                         $('#seller_name').html(name);
@@ -253,10 +259,12 @@
 
         if (isNaN(id) || isNaN(qt) || isNaN(vl)) {
             alert('Item inválido.');
+            $('#item_id').focus();
             return;
         }
         if (id <= 0 || qt <= 0 || vl <= 0) {
             alert('Item não pode ser incluído.');
+            $('#item_id').focus();
             return;
         }
 

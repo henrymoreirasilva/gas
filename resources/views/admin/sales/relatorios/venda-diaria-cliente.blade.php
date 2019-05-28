@@ -31,7 +31,7 @@
 @if (!empty($sales))
 
     <style>
-        #area-print * {font-family: monospace; font-size: 9px}
+        #area-print * {font-family: monospace; font-size: 11px}
         #area-print hr {border:none;border-bottom: 1px dotted #ccc;margin:0;padding:0;width:100%;height:1px}
         #area-print div {line-height: 18px}
         #area-print .money {text-align: right}

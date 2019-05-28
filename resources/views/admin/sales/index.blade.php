@@ -78,5 +78,4 @@
     </table>
     {!! $sales->render() !!}
 </div>
-
 @endsection()

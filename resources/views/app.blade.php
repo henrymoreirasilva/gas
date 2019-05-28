@@ -117,17 +117,61 @@ $(document).ready(function () {
     $("#sale_date, #date1, #date2").datepicker({dateFormat: 'dd/mm/yy'});
 
     // desabilitar ENTER nos forms
-    $('form input').keypress(function (e) {
-
+    /*$('form input').keypress(function (e) {
+        console.log(e.keyCode);
         if ((e.keyCode == 10) || (e.keyCode == 13)) {
             e.preventDefault();
             var nextTab = e.currentTarget.tabIndex;
             nextTab++;
             console.log(nextTab);
             var nextField = $('[tabindex="' + nextTab + '"]')[0];
+            console.log(nextField);
             $(nextField).focus();
         }
-    });
+    });*/
+    if (document.getElementById('form-vendas')) {
+        document.addEventListener('keydown', function(e) {
+            
+            
+            e = e || window.event;
+            //console.log(e);
+            var code = e.which || e.keyCode;
+            
+            if (e.keyCode === 121) {
+                e.preventDefault();
+                $('#form-vendas').submit();
+            } else {
+                if (e.keyCode === 118) {
+                    e.preventDefault();
+                    $('#bt-clients').click();
+                } else {
+                    if (e.keyCode === 119) {
+                        e.preventDefault();
+                        $('#bt-sellers').click();
+                    } else {
+                       if (e.keyCode === 120) {
+                           e.preventDefault();
+                            $('#bt-products').click();
+                        } else {
+                            if ((e.keyCode == 10) || (e.keyCode == 13)) {
+                                
+                                
+                                var nextTab = e.target.tabIndex;
+                                if (e.target.id !== 'bt-add-item') {
+                                    e.preventDefault();
+                                    nextTab++;
+                                    var nextField = $('[tabindex="' + nextTab + '"]')[0];
+                                    $(nextField).focus();
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+
+        });
+    }
 
     // Trigger modal
 

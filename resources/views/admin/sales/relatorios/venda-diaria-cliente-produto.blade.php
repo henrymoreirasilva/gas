@@ -37,7 +37,7 @@
 @if (!empty($sales))
 
     <style>
-        #area-print * {font-family: monospace; font-size: 9px}
+        #area-print * {font-family: monospace; font-size: 11px}
         #area-print hr {border:none;border-bottom: 1px dotted #ccc;margin:0;padding:0;width:100%;height:1px}
         #area-print div {line-height: 18px}
         #area-print .money {text-align: right}
@@ -93,7 +93,9 @@
         if ($clienteAtual != $sale->client_id) {
             if ($clienteAtual != 0) {
                 if ($linhas == 8) {
-                    $html .= '<div class="row"><div class="col-xs-10 col-offset-2">CLIENTE: '. $clienteAtual. '-'. $clienteAtualNome. '-'. $sale->clienteAtualCompania. '</div><hr></div>';
+                    $html .= '<div class="row">'
+                            . '<div class="col-xs-8 col-offset-2">CLIENTE: '. $clienteAtual. '-'. $clienteAtualNome. '-'. $sale->clienteAtualCompania. '</div>'
+                            . '<hr></div>';
                     $linhas++;
                 }
                 $html .= '  <div class="row">
@@ -120,7 +122,7 @@
                 $filialAtual = $sale->branch_id;
             }
             
-            $html .= '<div class="row"><hr><div class="col-xs-10 col-offset-2">CLIENTE: '. $sale->client_id. '-'. $sale->client_name. '-'. $sale->client_company_name. '</div></div>';
+            $html .= '<div class="row"><hr><div class="col-xs-8 col-offset-3">CLIENTE: '. $sale->client_id. '-'. $sale->client_name. '-'. $sale->client_company_name. '</div></div>';
             $linhas++;
             
             $totalCliente = .0;
@@ -161,7 +163,7 @@
     if ($html != '') {
         $html .= '  <div class="row">
 
-                        <div class="col-xs-6 col-xs-offset-2">TOTAL CLIENTE: </div>
+                        <div class="col-xs- col-xs-offset-2">TOTAL CLIENTE: </div>
                         <div class="col-xs-4 money">'. number_format($totalCliente, 2, ',', '.').'</div>
                     <hr></div>';
                             $html .= '  <div class="row">

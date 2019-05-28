@@ -41,6 +41,7 @@
 @endsection()
 <script>
 function setClientId(id, branch_id) {
+
 	parent.top.document.getElementById('client_id').value = id;
 	parent.top.document.getElementById('branch_id').value = branch_id;
 
@@ -48,6 +49,6 @@ function setClientId(id, branch_id) {
 	parent.top.getClient(id);
 	
 	parent.top.$('#myModal').modal('hide');
-	parent.top.$('#seller_id').focus();
+	
 }
 </script>

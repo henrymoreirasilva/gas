@@ -46,6 +46,6 @@
         parent.top.getProduct(id);
         
         parent.top.$('#myModal').modal('hide');
-        parent.top.$('#item_qtd').focus();
+        //parent.top.$('#item_qtd').focus();
     }
 </script>
