@@ -248,6 +248,7 @@ class SalesController extends Controller {
     }
 
     public function vendaDiaria(Request $request) {
+        $items = array();
         $sales = array();
         $data = $request->all();
         if (count($data) > 0) {
@@ -265,6 +266,7 @@ class SalesController extends Controller {
             $sales = DB::table('sales')
                     ->select(
                         DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'clients.name as client_name', 'branches.id as branch_id', 'clients.id as client_id', 'sales.amount'
+                        //   , 'products.name', 'products.id', DB::raw("SUM(sale_items.price) as sum_item_price"), DB::raw("SUM(sale_items.quantity) as sum_item_quantity")
                     )
                     ->whereBetween('sale_date', [$data['date1'], $data['date2']])
                     ->join('branches', function ($join) {
@@ -286,11 +288,10 @@ class SalesController extends Controller {
                     ->orderBy('branches.company_name')
                     ->orderBy('branches.id')
                     ->orderBy('clients.name')
-//                    ->groupBy('sales.sale_date')
-//                    ->groupBy('branches.id')
                     ->get();
-
-            //dd($sales);
+                    
+                    $items = $this->totaisProdutos($data);
+            
             $data['date1'] = $this->formataData($data['date1']);
             $data['date2'] = $this->formataData($data['date2']);
         } else {
@@ -301,10 +302,11 @@ class SalesController extends Controller {
         $branches = $this->branchRepository->lists('company_name', 'id');
         $branches->prepend('***', 0);
         
-        return view('admin.sales.relatorios.venda-diaria-cliente', compact('data', 'sales', 'branches'));
+        return view('admin.sales.relatorios.venda-diaria-cliente', compact('data', 'sales', 'branches', 'items'));
     }
     
     public function vendaDiariaProduto(Request $request) {
+        $items = array();
         $sales = array();
         $data = $request->all();
         if (count($data) > 0) {
@@ -353,8 +355,9 @@ class SalesController extends Controller {
                     ->groupBy('branches.id')
                     ->groupBy('products.id')
                     ->get();
-
-            //dd($sales);
+                    
+            $items = $this->totaisProdutos($data);
+            
             $data['date1'] = $this->formataData($data['date1']);
             $data['date2'] = $this->formataData($data['date2']);
         } else {
@@ -365,7 +368,139 @@ class SalesController extends Controller {
         $branches = $this->branchRepository->lists('company_name', 'id');
         $branches->prepend('***', 0);
         
-        return view('admin.sales.relatorios.venda-diaria-produto', compact('data', 'sales', 'branches'));
+        return view('admin.sales.relatorios.venda-diaria-produto', compact('data', 'sales', 'branches', 'items'));
     }
+    
+    public function vendaClienteProduto(Request $request) {
+        $items = array();
+        $sales = array();
+        $data = $request->all();
+        if (count($data) > 0) {
+            if (isset($data['date1'])) {
+                $data['date1'] = $this->formataData($data['date1'], '-');
+            }
+            if (isset($data['date2'])) {
+
+                $data['date2'] = $this->formataData($data['date2'], '-');
+            }
+            if (!isset($data['branch_id'])) {
+                $data['branch_id'] = NULL;
+            }
+            if (!isset($data['client_id'])) {
+                $data['client_id'] = NULL;
+            }
+
+            $sales = DB::table('sales')
+                    ->select(
+                        DB::raw("DATE_FORMAT(sales.sale_date, '%d/%m/%Y') as sale_date"), 'branches.company_name as branch_name', 'branches.id as branch_id',
+                        DB::raw("SUM(sale_items.price) as sum_item_price"), DB::raw("SUM(sale_items.quantity) as sum_item_quantity"),
+                        DB::raw("AVG(sale_items.price) as avg_item_price"), 'products.name as product_name', 'products.unidade', 'products.id as product_id',
+                        DB::raw("SUM(sale_items.price * sale_items.quantity) as sum_total"), 'clients.name as client_name', 'clients.company_name as client_company_name',
+                        'clients.id as client_id'
+                    )
+                    ->join('branches', function ($join) {
+                        $join->on('sales.branch_id', '=', 'branches.id');
+                    })
+                    ->join('clients', function ($join) {
+                        $join->on('sales.client_id', '=', 'clients.id');
+                    })
+                    ->join('sale_items', function ($join) {
+                        $join->on('sale_items.sale_id', '=', 'sales.id');
+                    })
+                    ->join('products', function ($join) {
+                        $join->on('products.id', '=', 'sale_items.product_id');
+                    })
+                    ->whereBetween('sale_date', [$data['date1'], $data['date2']])
+                    ->where(function ($query) use ($data) {                      
+
+                        if (empty($data['branch_id'])) {
+                          $query->where('branches.id', '<>', 0);
+                        } else {
+                          $query->where('branches.id', '=', $data['branch_id']);
+                        }
+                        
+                        if (empty($data['client_id'])) {
+                          $query->where('clients.id', '<>', 0);
+                        } else {
+                          $query->where('clients.id', '=', $data['client_id']);
+                        }
+                    })
+                    ->orderBy('branches.company_name')
+                    ->orderBy('branches.id')
+                    ->orderBy('clients.name')
+                    ->orderBy('clients.id')
+                    ->orderBy('sales.sale_date', 'desc')
+                    ->orderBy('products.name')
+
+                    ->groupBy('branches.id')
+                    ->groupBy('clients.id')
+                    ->groupBy('sales.sale_date')
+                    ->get();
+                    
+            $items = $this->totaisProdutos($data);
+            
+            $data['date1'] = $this->formataData($data['date1']);
+            $data['date2'] = $this->formataData($data['date2']);
+        } else {
+            $data['date1'] = date('d/m/Y');
+            $data['date2'] = date('d/m/Y');
+        }
+
+        $branches = $this->branchRepository->lists('company_name', 'id');
+        $branches->prepend('***', 0);
+        
+        $clients = $this->clientRepository->lists('name', 'id');
+        $clients->prepend('***', 0);
+        
+        return view('admin.sales.relatorios.venda-diaria-cliente-produto', compact('data', 'sales', 'branches', 'items', 'clients'));
+    }
+    
+    public function totaisProdutos($data) {
+        $items = array();
+        if (count($data) > 0) {
+            $items = DB::table('sale_items')
+                    ->select(
+                        DB::raw("SUM(sale_items.price) as sum_item_price"), DB::raw("SUM(sale_items.quantity) as sum_item_quantity"),
+                        DB::raw("AVG(sale_items.price) as avg_item_price"), 'products.name', 'products.unidade',
+                        DB::raw("SUM(sale_items.price * sale_items.quantity) as sum_total")
+                    )
+                    ->join('sales', function ($join) {
+                        $join->on('sales.id', '=', 'sale_items.sale_id');
+                    })
+                    ->join('branches', function ($join) {
+                        $join->on('sales.branch_id', '=', 'branches.id');
+                    })
+                    ->join('products', function ($join) {
+                        $join->on('sale_items.product_id', '=', 'products.id');
+                    })
+                    ->join('clients', function ($join) {
+                        $join->on('sales.client_id', '=', 'clients.id');
+                    })
+                    ->whereBetween('sale_date', [$data['date1'], $data['date2']])
+                    ->where(function ($query) use ($data) {                      
+
+                        if (empty($data['branch_id'])) {
+                          $query->where('branches.id', '<>', 0);
+                        } else {
+                          $query->where('branches.id', '=', $data['branch_id']);
+                        }
+
+                        if (empty($data['client_id'])) {
+                          $query->where('clients.id', '<>', 0);
+                        } else {
+                          $query->where('clients.id', '=', $data['client_id']);
+                        }
+
+                    })
+                    ->orderBy('products.name')
+                    ->orderBy('products.id')
+                    ->groupBy('products.id')
+                    ->get();
+                    
+        }
+        
+        return $items;
+    }
+    
     
 }

@@ -48,6 +48,7 @@
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/admin/sales/relatorios/venda-diaria-cliente') }}">Vendas Data-Filial-Cliente</a></li>
                                 <li><a href="{{ url('/admin/sales/relatorios/venda-diaria-produto') }}">Vendas Data-Filial-Produto</a></li>
+                                <li><a href="{{ url('/admin/sales/relatorios/venda-diaria-cliente-produto') }}">Vendas Cliente-Produto</a></li>
                             </ul>
                         </li>
                         @if (Auth::user()->role == 'admin')

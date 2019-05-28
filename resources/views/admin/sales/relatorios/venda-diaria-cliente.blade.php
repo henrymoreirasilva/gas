@@ -56,8 +56,9 @@
     $pagina = 0;
     $linhas = 60;
     $html = '';
-    foreach($sales as $sale) {
 
+    foreach($sales as $sale) {
+        
         if ($diaAtual != $sale->sale_date) {
 
             if ($pagina > 0) {
@@ -123,17 +124,17 @@
             $linhas = 9;
         }
 
-
         $html .= '  <div class="row">
 
                         <div class="col-xs-4 col-xs-offset-2">'. $sale->client_id. '-'. $sale->client_name. '</div>
                         <div class="col-xs-4 money">'. number_format($sale->amount, 2, ',', '.').'</div>
                     </div>';
+        $linhas++;
+
         $totalPeriodo += (float)$sale->amount;
         $totalDia +=  (float)$sale->amount;
         $totalFilial +=  (float)$sale->amount;
-        //echo $totalDia. ' - ';
-        $linhas++;
+        
     }
     if ($html != '') {
         $html .= '  <div class="row">
@@ -148,6 +149,37 @@
                 <div class="col-xs-4 money"><h5>'. number_format($totalPeriodo, 2, ',', '.').'</h5></div>
             </div>
             <hr />';
+        
+            $pagina++;
+        
+            $html .= '  <hr class="new-page" /><hr>
+                        <div class="row">
+                            <div class="col-xs-3">GAVA GÁS</div>
+                            <div class="col-xs-6 text-center">VENDAS DATA-FILIAL-CLIENTE :: De: '. $data['date1'] . ' até '. $data['date2'] . '</div>
+                            <div class="col-xs-3 text-right">Página: '. $pagina. '/$$</div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-2">PRODUTO</div>
+                            <div class="col-xs-2 text-right">QUANTIDADE</div>
+                            <div class="col-xs-2 text-right">PREÇO MÉDIO</div>
+                            <div class="col-xs-2 text-right">TOTAL</div>
+                        </div>
+                        <hr /><hr>';
+            $totalPeriodo = 0;
+            foreach ($items as $item) {
+                $html .= '<div class="row">
+                                <div class="col-xs-2 col-xs-offset-2">'. $item->name. ' - '. $item->unidade. '</div>
+                                <div class="col-xs-2 text-right">'. number_format($item->sum_item_quantity, 2, ',', '.'). '</div>
+                                <div class="col-xs-2 text-right">'. number_format($item->avg_item_price, 2, ',', '.'). '</div>
+                                <div class="col-xs-2 text-right">'. number_format($item->sum_total, 2, ',', '.'). '</div>
+                            </div>';
+                $totalPeriodo += (float)$item->sum_total;
+            }
+            $html .= '<hr /><div class="row">
+                <div class="col-xs-4 col-xs-offset-2">TOTAL DOS ITENS</div>
+                <div class="col-xs-4 text-right">'. number_format($totalPeriodo, 2, ',', '.'). '</div>
+            </div><hr />';
 
     }
     $html =  str_replace('$$', $pagina, $html);

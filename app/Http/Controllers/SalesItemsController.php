@@ -87,5 +87,7 @@ class SalesItemsController extends Controller
             $sale->delete();
         }
     }
+    
+    
 
 }

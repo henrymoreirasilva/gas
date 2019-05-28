@@ -85,8 +85,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth.checkrole:admin,user', 
         Route::delete('delete/{id}', ['as' => 'delete', 'uses' => 'SalesController@destroy']);
         Route::get('relat', ['as' => 'por-data', 'uses' => 'SalesController@porData']);
         Route::group(['prefix' => 'relatorios', 'as' => 'relatorios.'], function() {
+            Route::get('venda-diaria-cliente-produto', ['as' => 'venda-diaria-cliente-produto', 'uses' => 'SalesController@vendaClienteProduto']);
             Route::get('venda-diaria-cliente', ['as' => 'venda-diaria-cliente', 'uses' => 'SalesController@vendaDiaria']);
             Route::get('venda-diaria-produto', ['as' => 'venda-diaria-produto', 'uses' => 'SalesController@vendaDiariaProduto']);
+            
         });
     });
 });
