@@ -93,7 +93,7 @@
             if ($clienteAtual != 0) {
                 if ($linhas == 8) {
                     $html .= '<div class="row">'
-                            . '<div class="col-xs-8 col-offset-2">CLIENTE: '. $clienteAtual. '-'. $clienteAtualNome. '-'. $sale->clienteAtualCompania. '</div>'
+                            . '<div class="col-xs-8 col-offset-2">CLIENTE: '. $clienteAtual. '-'. $clienteAtualNome. '</div>'
                             . '<hr></div>';
                     $linhas++;
                 }
