@@ -59,7 +59,6 @@
     $totalFilial = .0;
     $clienteAtual = 0;
     $clienteAtualNome = '';
-    $clienteAtualCompania = '';
     $diaAtual = '';
     $filialAtual = 0;
 
@@ -129,7 +128,7 @@
 
             $clienteAtual = $sale->client_id;
             $clienteAtualNome = $sale->client_name;
-            $clienteAtualCompania = $sale->client_company_name;
+
             
             $diaAtual = '';
             
