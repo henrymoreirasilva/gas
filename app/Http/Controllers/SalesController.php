@@ -41,9 +41,13 @@ class SalesController extends Controller {
       return view('admin.sales.index', compact('sales', ['date1' => $date1, 'date2' => $date2]));
       } */
 
-    public function create() {
+    public function create($data = []) {
         $sale = new Sale();
-
+        
+        // Para manter a última data informada
+        if (isset($data['sale_date'])) {
+            $sale->sale_date = $data['sale_date'];
+        }
         return view('admin.sales.create', compact('sale'));
     }
 
@@ -61,8 +65,9 @@ class SalesController extends Controller {
         foreach ($data['item'] as $item) {
             SaleItem::create(['product_id' => $item['id-item'], 'sale_id' => $sale->id, 'price' => $this->tiraMaskPreco($item['price-item']), 'quantity' => $item['qtd-item']]);
         }
-        //return redirect()->route('admin.sales.index');
-        return $this->create();
+
+        $data['sale_date'] = $this->formataData($data['sale_date'], '/');
+        return $this->create(['sale_date' => $data['sale_date']]);
     }
 
     public function edit($id) {
@@ -435,6 +440,7 @@ class SalesController extends Controller {
                     ->groupBy('branches.id')
                     ->groupBy('clients.id')
                     ->groupBy('sales.sale_date')
+                    ->groupBy('sale_items.product_id')
                     ->get();
                     
             $items = $this->totaisProdutos($data);

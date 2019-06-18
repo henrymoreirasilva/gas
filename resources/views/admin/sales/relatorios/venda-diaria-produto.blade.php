@@ -173,7 +173,7 @@
             $html .= '<div class="row">
                             <div class="col-xs-2 col-xs-offset-2">'. $item->name. ' - '. $item->unidade. '</div>
                             <div class="col-xs-2 text-right">'. number_format($item->sum_item_quantity, 2, ',', '.'). '</div>
-                            <div class="col-xs-2 text-right">'. number_format($item->avg_item_price, 2, ',', '.'). '</div>
+                            <div class="col-xs-2 text-right">'. number_format($item->sum_total/$item->sum_item_quantity, 2, ',', '.'). '</div>
                             <div class="col-xs-2 text-right">'. number_format($item->sum_total, 2, ',', '.'). '</div>
                         </div>';
             $totalPeriodo += (float)$item->sum_total;

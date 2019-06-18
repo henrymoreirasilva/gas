@@ -42,7 +42,7 @@
 <div class="form-group">
     {!! Form::label('sale_date', 'Data da venda:', ['class' => 'col-sm-3']) !!}
     <div class="col-sm-4">
-        {!! Form::text('sale_date', null, ['class' => 'form-control date', 'tabindex' => 3]) !!}
+        {!! Form::text('sale_date', $sale->sale_date, ['class' => 'form-control date', 'tabindex' => 3]) !!}
     </div>
 </div>
 

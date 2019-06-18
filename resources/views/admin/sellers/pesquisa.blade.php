@@ -2,14 +2,10 @@
 @section('content')
 <form class="form-inline" id="expressao-form" action="{{ route('admin.sellers.pesquisa') }}/{{$branch_id}}" method="get">
 	<div class="input-group">
-      <input type="text" class="form-control" placeholder="Procurar por..." name="exp" id="expressao-filtro" value="{{ $exp }}" />
+            <input type="text" class="form-control" autofocus="true" placeholder="Procurar por..." name="exp" id="expressao-filtro" value="{{ $exp }}" />
       <span class="input-group-btn">
         
-        @if ($exp == '')
-        	<button class="btn btn-default" type="submit">Filtrar</button>
-        @else
-    		<button class="btn btn-default" type="submit" onclick="$('#expressao-filtro').val('')">Limpar filtro</button>
-		@endif
+      <button class="btn btn-default" type="submit">Filtrar</button>
       </span>
     </div>
 </form>
