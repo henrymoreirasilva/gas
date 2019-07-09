@@ -22,7 +22,7 @@
                 <![endif]-->
 
     </head>
-    <body>
+    <body >
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -32,7 +32,7 @@
                             class="icon-bar"></span> <span class="icon-bar"></span> <span
                             class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/home">GAVA GÁS</a>
+                    <a class="navbar-brand" href="/home"><img src="/imagens/logo-gavagas.jpg" width="80" height="auto"/></a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="navbar">

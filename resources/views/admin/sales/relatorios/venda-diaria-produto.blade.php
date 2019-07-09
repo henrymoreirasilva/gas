@@ -125,11 +125,18 @@
             $linhas = 9;
         }
 
+//        $html .= '  <div class="row">
+//
+//                        <div class="col-xs-3 col-xs-offset-1">'. $sale->product_id. '-'. $sale->product_name. '</div>
+//                        <div class="col-xs-2 number">'. round($sale->quantity, 0).'</div>
+//                        <div class="col-xs-2 money">'. number_format($sale->price_avg, 2, ',', '.').'</div>
+//                        <div class="col-xs-2 money">'. number_format($sale->price, 2, ',', '.').'</div>
+//                    </div>';
         $html .= '  <div class="row">
 
                         <div class="col-xs-3 col-xs-offset-1">'. $sale->product_id. '-'. $sale->product_name. '</div>
                         <div class="col-xs-2 number">'. round($sale->quantity, 0).'</div>
-                        <div class="col-xs-2 money">'. number_format($sale->price_avg, 2, ',', '.').'</div>
+                        <div class="col-xs-2 money">'. number_format($sale->price/$sale->quantity, 2, ',', '.').'</div>
                         <div class="col-xs-2 money">'. number_format($sale->price, 2, ',', '.').'</div>
                     </div>';
         $totalPeriodo += (float)$sale->price;

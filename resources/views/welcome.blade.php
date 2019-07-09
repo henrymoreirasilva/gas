@@ -23,6 +23,7 @@
                 text-align: center;
                 display: table-cell;
                 vertical-align: middle;
+                background: url(/imagens/logo-gavagas.jpg) center no-repeat
             }
 
             .content {
@@ -33,13 +34,15 @@
             .title {
                 font-size: 96px;
             }
+            .btn {display: inline-block; padding: 5px 20px; margin: 20px auto;text-decoration: none; color: #000; border: 1px solid #333}
+            .btn:hover {color: #FFF; background-color: #333;}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">GAVA GÁS</div>
-                <a class="" href="/auth/login">Entrar</a>
+                <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                <a class="btn" href="/auth/login">Entrar</a>
             </div>
         </div>
     </body>

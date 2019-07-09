@@ -73,8 +73,8 @@
 
             $html .= '  
                         <div class="row"><hr class="new-page" /><hr>
-                            <div class="col-xs-3">GAVA GÁS</div>
-                            <div class="col-xs-6 text-center">VENDAS CLIENTE-PRODUTO :: De: '. $data['date1'] . ' até '. $data['date2'] . '</div>
+                            <div class="col-xs-2"><img src="/imagens/logo-gavagas.jpg" width="60" height="auto"/></div>
+                            <div class="col-xs-7 text-center">VENDAS CLIENTE-PRODUTO :: De: '. $data['date1'] . ' até '. $data['date2'] . '</div>
                             <div class="col-xs-3 text-right">Página: '. $pagina. '/$$</div>
                         <hr /></div>
                         
@@ -145,14 +145,20 @@
 
 
 
+//        $html .= '  <div class="row">
+//                        <div class="col-xs-1 col-xs-offset-1">'. $sale->sale_date. '</div>
+//                        <div class="col-xs-3">'. $sale->product_id. '-'. $sale->product_name. '-'. $sale->unidade. '</div>
+//                        <div class="col-xs-2 money">'. number_format($sale->sum_item_quantity, 2, ',', '.').'</div>
+//                        <div class="col-xs-2 money">'. number_format($sale->avg_item_price, 2, ',', '.').'</div>
+//                        <div class="col-xs-2 money">'. number_format($sale->sum_total, 2, ',', '.').'</div>
+//                    </div>';
         $html .= '  <div class="row">
                         <div class="col-xs-1 col-xs-offset-1">'. $sale->sale_date. '</div>
                         <div class="col-xs-3">'. $sale->product_id. '-'. $sale->product_name. '-'. $sale->unidade. '</div>
                         <div class="col-xs-2 money">'. number_format($sale->sum_item_quantity, 2, ',', '.').'</div>
-                        <div class="col-xs-2 money">'. number_format($sale->avg_item_price, 2, ',', '.').'</div>
+                        <div class="col-xs-2 money">'. number_format($sale->sum_total/$sale->sum_item_quantity, 2, ',', '.').'</div>
                         <div class="col-xs-2 money">'. number_format($sale->sum_total, 2, ',', '.').'</div>
                     </div>';
-        
         $totalPeriodo += (float)$sale->sum_total;
         $totalCliente +=  (float)$sale->sum_total;
         $totalFilial +=  (float)$sale->sum_total;
@@ -180,8 +186,8 @@
         
         $html .= '  
                     <div class="row"><hr class="new-page" /><hr>
-                        <div class="col-xs-3">GAVA GÁS</div>
-                        <div class="col-xs-6 text-center">VENDAS DATA-FILIAL-PRODUTO :: De: '. $data['date1'] . ' até '. $data['date2'] . '</div>
+                        <div class="col-xs-2"><img src="/imagens/logo-gavagas.jpg" width="60" height="auto"/></div>
+                        <div class="col-xs-7 text-center">VENDAS DATA-FILIAL-PRODUTO :: De: '. $data['date1'] . ' até '. $data['date2'] . '</div>
                         <div class="col-xs-3 text-right">Página: '. $pagina. '/$$</div>
                     </div>
                     
